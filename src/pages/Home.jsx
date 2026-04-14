@@ -435,7 +435,7 @@ export default function Home() {
           </div>
 
           <div className="hero-image hero-image-wrap" style={{ flexShrink: 0 }}>
-            <img src="src/img/RCE logo.png" alt="RCE Medallion" style={{ width: 'clamp(200px, 35vw, 460px)', height: 'clamp(200px, 35vw, 460px)', objectFit: 'contain', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }} />
+            <img src="/img/RCE logo.png" alt="RCE Medallion" style={{ width: 'clamp(200px, 35vw, 460px)', height: 'clamp(200px, 35vw, 460px)', objectFit: 'contain', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }} />
           </div>
         </div>
       </section>
@@ -460,7 +460,7 @@ export default function Home() {
       <section className="about-section" style={{ backgroundColor: 'white', padding: '100px 48px', position: 'relative' }}>
         <div className="about-inner" style={{ ...styles.sectionMax, display: 'flex', alignItems: 'center', gap: '80px', flexWrap: 'wrap' }}>
           <div className="about-img" style={{ flex: 1, display: 'flex', justifyContent: 'center', minWidth: '280px' }}>
-            <img src="src/img/grc logo.png" alt="GRC Icon" style={{ width: 'clamp(200px, 40vw, 450px)', height: 'clamp(200px, 40vw, 450px)', objectFit: 'contain' }} />
+            <img src="/img/grc logo.png" alt="GRC Icon" style={{ width: 'clamp(200px, 40vw, 450px)', height: 'clamp(200px, 40vw, 450px)', objectFit: 'contain' }} />
           </div>
 
           <div style={{ flex: 1, minWidth: '260px' }}>
