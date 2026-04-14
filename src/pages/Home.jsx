@@ -536,12 +536,15 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── MAP SECTION ── */}
       <div style={{ width: '100%', height: '380px' }}>
         <iframe
           title="GRC Location"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.0381446726484!2d120.98565577584898!3d14.653737575775434!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b5f79986b629%3A0xc6e4c7003009026!2sGlobal%20Reciprocal%20Colleges!5e0!3m2!1sen!2sph!4v1712750000000!5m2!1sen!2sph"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.038!2d120.98316!3d14.65374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b5f79986b629%3A0xc6e4c7003009026!2sGlobal%20Reciprocal%20Colleges!5e0!3m2!1sen!2sph!4v1712750000000!5m2!1sen!2sph"
           style={{ width: '100%', height: '100%', border: 'none' }}
           loading="lazy"
+          allowFullScreen
+          referrerPolicy="no-referrer-when-downgrade"
         />
       </div>
     </div>

@@ -56,6 +56,7 @@ const SENIOR_SAS = [
   { id: 3, name: "DEMAIN",   label: "SENIOR S.A", highlight: false, image: "src/img/demain.png" },
   { id: 4, name: "GUARINO",  label: "SENIOR S.A", highlight: true, image: "src/img/guarino.png" },
   { id: 5, name: "DISPO",    label: "SENIOR S.A", highlight: false, image: "src/img/dispo.png" },
+  { id: 6, name: "ANTONIO",  label: "SENIOR S.A", highlight: true, image: "src/img/antonio.png" },
   
 ];
 
@@ -71,6 +72,9 @@ const NEW_SAS = [
   { id: 8, name: "CALIAGA",  label: "NEW S.A", image: "src/img/caliaga.png" },
   { id: 9, name: "DELA CRUZ",  label: "NEW S.A", image: "src/img/dela cruz...png" },
   { id: 10, name: "ALFONSO",  label: "NEW S.A", image: "src/img/alfonso.png" },
+  { id: 11, name: "TENORIO",  label: "NEW S.A", image: "src/img/tenorio.png" },
+  { id: 12, name: "REGINALDO",  label: "NEW S.A", image: "src/img/reginaldo.png" },
+  { id: 13, name: "CALIZON",  label: "NEW S.A", image: "src/img/calizon.png" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
