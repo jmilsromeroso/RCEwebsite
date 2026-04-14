@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 // ─── Brand Color ──────────────────────────────────────────────────────────────
 const GRC_RED = '#C8102E'
 
-// ─── Data & Styles (Unchanged) ───────────────────────────────────────────────
+// ─── Data & Styles ───────────────────────────────────────────────────────────
 const SOCIAL_LINKS = [
   { label: 'Facebook', href: 'https://www.facebook.com/GrcRCExtension', icon: (<svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978 1.602 0 2.44.119 2.84.174v3.307l-1.957.001c-1.936 0-2.312.911-2.312 2.272v1.804h4.333l-.565 3.667h-3.768v7.981H9.101z" /></svg>) },
   { label: 'Instagram', href: '#', icon: (<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>) },
@@ -24,7 +24,7 @@ const styles = {
   mutedText: { color: 'rgba(255,255,255,0.6)', fontSize: '13px', lineHeight: 1.8 },
 }
 
-// ─── Sub-components (Unchanged) ───────────────────────────────────────────────
+// ─── Sub-components ───────────────────────────────────────────────────────────
 function SocialIcon({ label, href, icon }) {
   return (
     <a href={href} aria-label={label} style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid rgba(255,255,255,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', flexShrink: 0 }}>
@@ -73,13 +73,27 @@ function ContactColumn({ isMobile }) {
   return (
     <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
       <p style={styles.columnHeading}>Contact</p>
-      <p style={styles.mutedText}>
-        454 GRC Building, Rizal Ave Ext,<br />Cor. 9th Avenue Grace Park,<br />Caloocan, City<br /><br />
-        0999-999-9999<br />(63+) 900-000-0000<br /><br />
-        <a href="mailto:rceassistextension0104@gmail.com" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'underline', wordBreak: 'break-all' }}>
-          rceassistextension0104@gmail.com
+      <div style={styles.mutedText}>
+        454 GRC Building, Rizal Ave Ext,<br />
+        Cor. 9th Avenue Grace Park,<br />
+        Caloocan, City<br /><br />
+        0999-999-9999<br />
+        (63+) 900-000-0000<br /><br />
+        <a 
+          href="mailto:researchcommunityextension@gmail.com" 
+          style={{ 
+            color: 'rgba(255,255,255,0.6)', 
+            textDecoration: 'underline',
+            display: 'inline-block',
+            maxWidth: '100%',
+            whiteSpace: 'nowrap',    // Forces single line
+            overflow: 'hidden',      // Prevents content spill
+            textOverflow: 'ellipsis' // Adds "..." if screen is too narrow
+          }}
+        >
+          researchcommunityextension@gmail.com
         </a>
-      </p>
+      </div>
     </div>
   )
 }
@@ -108,12 +122,9 @@ export default function Footer() {
       }}
     >
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-
-        {/* Responsive Grid System */}
         <div
           style={{
             display: 'grid',
-            // 1 column for mobile, 2 for tablet, 4 for desktop
             gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
             gap: isMobile ? '32px' : '40px',
           }}
@@ -124,7 +135,6 @@ export default function Footer() {
           <ContactColumn isMobile={isMobile} />
         </div>
 
-        {/* Bottom copyright bar */}
         <div
           style={{
             marginTop: '48px',

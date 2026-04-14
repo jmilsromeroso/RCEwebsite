@@ -508,7 +508,7 @@ export default function Home() {
               <div>
                 <ContactInfo icon="📍" text={<>454 GRC Building, Rizal Ave Ext,<br />Cor. 9th Avenue Grace Park, Caloocan City</>} />
                 <ContactInfo icon="📞" text="0999-999-9999" />
-                <ContactInfo icon="✉️" text="rceassistextension0104@gmail.com" />
+                <ContactInfo icon="✉️" text="researchcommunityextension@gmail.com" />
               </div>
               <div style={{ borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '24px' }}>
                 <div style={{ display: 'flex', gap: '20px' }}>
@@ -543,7 +543,7 @@ export default function Home() {
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d965.0193!2d120.9835096!3d14.6498596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b5d4fab883bb%3A0x96f1adb22bed4d5e!2sGlobal%20Reciprocal%20Colleges%20-%20GRC!5e0!3m2!1sen!2sph!4v1744000000000!5m2!1sen!2sph"
           style={{ width: '100%', height: '100%', border: 'none' }}
           loading="lazy"
-          allowFullScreen
+          allowFullScreenno
           referrerPolicy="no-referrer-when-downgrade"
         />
       </div>
