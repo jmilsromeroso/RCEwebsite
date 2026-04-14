@@ -51,25 +51,19 @@ const PROFESSORS = [
 ];
 
 const SENIOR_SAS = [
-<<<<<<< HEAD
+
   { id: 1, name: "ROMEROSO", label: "SENIOR S.A", highlight: false, image: "src/img/Image_jmil.png" },
   { id: 2, name: "CLAVIO",   label: "SENIOR S.A", highlight: true, image: "src/img/clavio.png" },
   { id: 3, name: "DEMAIN",   label: "SENIOR S.A", highlight: false, image: "src/img/demain.png" },
   { id: 4, name: "GUARINO",  label: "SENIOR S.A", highlight: true, image: "src/img/guarino.png" },
   { id: 5, name: "DISPO",    label: "SENIOR S.A", highlight: false, image: "src/img/dispo.png" },
   { id: 6, name: "ANTONIO",  label: "SENIOR S.A", highlight: true, image: "src/img/antonio.png" },
-=======
-  { id: 1, name: "ROMEROSO", label: "SENIOR S.A", highlight: false, image: "/img/Image_jmil.png" },
-  { id: 2, name: "CLAVIO",   label: "SENIOR S.A", highlight: true, image: "/img/clavio.png" },
-  { id: 3, name: "DEMAIN",   label: "SENIOR S.A", highlight: false, image: "/img/demain.png" },
-  { id: 4, name: "GUARINO",  label: "SENIOR S.A", highlight: true, image: "/img/guarino.png" },
-  { id: 5, name: "DISPO",    label: "SENIOR S.A", highlight: false, image: "/img/dispo.png" },
->>>>>>> 0a8643f5f2d2873e17bdfe66604f809ae40f2119
+
   
 ];
 
 const NEW_SAS = [
-<<<<<<< HEAD
+
   { id: 1, name: "ALAGOS",  label: "NEW S.A", image: "src/img/alagos.png" },
   { id: 2, name: "SELORIO", label: "NEW S.A", image: "src/img/selorio.png" },
   { id: 3, name: "NARAJA",  label: "NEW S.A", image: "src/img/naraja.png" },
@@ -84,19 +78,7 @@ const NEW_SAS = [
   { id: 11, name: "TENORIO",  label: "NEW S.A", image: "src/img/tenorio.png" },
   { id: 12, name: "REGINALDO",  label: "NEW S.A", image: "src/img/reginaldo.png" },
   { id: 13, name: "CALIZON",  label: "NEW S.A", image: "src/img/calizon.png" },
-=======
-  { id: 1, name: "ALAGOS",  label: "NEW S.A", image: "/img/alagos.png" },
-  { id: 2, name: "SELORIO", label: "NEW S.A", image: "/img/selorio.png" },
-  { id: 3, name: "NARAJA",  label: "NEW S.A", image: "/img/naraja.png" },
-  { id: 4, name: "SINGHID", label: "NEW S.A", image: "/img/singhid.png" },
-  { id: 5, name: "AGULLO",  label: "NEW S.A", image: "/img/agullo.png" },
-  { id: 6, name: "DACULAN",  label: "NEW S.A", image: "/img/daculan.png" },
-  { id: 7, name: "SOMIDO",  label: "NEW S.A", image: "/img/somido.png" },
-  { id: 7, name: "ABUT",  label: "NEW S.A", image: "/img/abut.png" },
-  { id: 8, name: "CALIAGA",  label: "NEW S.A", image: "/img/caliaga.png" },
-  { id: 9, name: "DELA CRUZ",  label: "NEW S.A", image: "/img/dela cruz...png" },
-  { id: 10, name: "ALFONSO",  label: "NEW S.A", image: "/img/alfonso.png" },
->>>>>>> 0a8643f5f2d2873e17bdfe66604f809ae40f2119
+
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
