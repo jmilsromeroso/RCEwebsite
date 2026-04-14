@@ -2,16 +2,16 @@ import { Link, useLocation } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 
 // 1. Ensure this path points to your actual logo file
-import grcLogo from '../img/logo.png'
+import grcLogo from '/img/logo.png'
 
 const GRC_RED = '#C8102E'
 
 const navLinks = [
-  { label: 'Home',         path: '/' },
+  { label: 'Home', path: '/' },
   { label: 'Achievements', path: '/achievements' },
-  { label: 'Alumni',       path: '/alumni' },
-  { label: 'About Us',     path: '/about' },
-  { label: 'Contact Us',   path: '/contact' },
+  { label: 'Alumni', path: '/alumni' },
+  { label: 'About Us', path: '/about' },
+  { label: 'Contact Us', path: '/contact' },
 ]
 
 export default function Navbar() {
@@ -92,11 +92,11 @@ export default function Navbar() {
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '64px' }}>
 
           <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-            <img 
-              src={grcLogo} 
+            <img
+              src={grcLogo}
               className="nav-logo"
-              alt="Logo" 
-              style={{ width: 'auto', objectFit: 'contain' }} 
+              alt="Logo"
+              style={{ width: 'auto', objectFit: 'contain' }}
             />
           </Link>
 
@@ -144,9 +144,9 @@ export default function Navbar() {
 
         {/* MOBILE DROPDOWN MENU */}
         {menuOpen && (
-          <div style={{ 
-            backgroundColor: 'white', 
-            borderTop: '1px solid #f0f0f0', 
+          <div style={{
+            backgroundColor: 'white',
+            borderTop: '1px solid #f0f0f0',
             padding: '16px 20px 24px',
             position: 'absolute',
             width: '100%',

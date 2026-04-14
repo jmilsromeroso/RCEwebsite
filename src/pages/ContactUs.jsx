@@ -223,7 +223,7 @@ function HeroSection() {
         </div>
 
         <div className="hero-image" style={{ flexShrink: 0 }}>
-          <img src="src/img/nstp removebg-preview.png" alt="NSTP Logo" style={{ width: 'clamp(280px, 35vw, 460px)', height: 'clamp(280px, 35vw, 460px)', objectFit: 'contain', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }} />
+          <img src="/img/nstp removebg-preview.png" alt="NSTP Logo" style={{ width: 'clamp(280px, 35vw, 460px)', height: 'clamp(280px, 35vw, 460px)', objectFit: 'contain', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }} />
         </div>
       </div>
     </section>

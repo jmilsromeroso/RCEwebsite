@@ -5,10 +5,10 @@
 import { useState, useEffect, useRef } from "react";
 
 // ── IMAGES ──
-const HERO_BG_PHOTO = "src/img/schoool_Image_aeq4ijaeq4ijaeq4.png";
-const HERO_PORTRAIT = "src/img/head.1-removebg-preview.png";
-const RCE_LOGO      = "src/img/grc logo.png";
-const DEAN_PORTRAIT = "src/img/Image1-removebg-preview.png";
+const HERO_BG_PHOTO = "/img/schoool_Image_aeq4ijaeq4ijaeq4.png";
+const HERO_PORTRAIT = "/img/head.1-removebg-preview.png";
+const RCE_LOGO      = "/img/grc logo.png";
+const DEAN_PORTRAIT = "/img/Image1-removebg-preview.png";
 
 // ── COLORS ──
 const RED   = '#C8102E';
@@ -22,7 +22,7 @@ const PROFESSORS = [
     title: "Professor, NSTP",
     bio: "Passionate about youth empowerment and civic engagement, Prof. Cubacub brings energy and purpose to every session — inspiring students to become active contributors to society.",
     highlight: false,
-    image: "src/img/sam.png",
+    image: "/img/sam.png",
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const PROFESSORS = [
     title: "Professor, NSTP",
     bio: "A visionary in social advocacy and pedagogy, Prof. Dela Cruz integrates decades of field experience into the classroom. By championing a values-first curriculum, they empower the next generation of leaders to navigate complex societal challenges with a steadfast commitment to ethical practice.",
     highlight: true,
-    image: "src/img/dela cruz.png",
+    image: "/img/dela cruz.png",
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ const PROFESSORS = [
     title: "Professor, NSTP",
     bio: "With a strong background in social work and education, Prof. Evangelista champions values-based learning and equips students with the skills to serve their communities with integrity.",
     highlight: false,
-    image: "src/img/jay.png",
+    image: "/img/jay.png",
   },
   {
     id: 4,
@@ -46,31 +46,31 @@ const PROFESSORS = [
     title: "Professor, NSTP",
     bio: "Prof. Gezzel bridges the gap between academic theory and community impact. Drawing from a robust background in social work, they equip students with a practical toolkit for civic engagement, ensuring every graduate is prepared to lead sustainable, integrity-driven initiatives in their local sectors.",
     highlight: true,
-    image: "src/img/gezzel.png",
+    image: "/img/gezzel.png",
   }
 ];
 
 const SENIOR_SAS = [
-  { id: 1, name: "ROMEROSO", label: "SENIOR S.A", highlight: false, image: "src/img/Image_jmil.png" },
-  { id: 2, name: "CLAVIO",   label: "SENIOR S.A", highlight: true, image: "src/img/clavio.png" },
-  { id: 3, name: "DEMAIN",   label: "SENIOR S.A", highlight: false, image: "src/img/demain.png" },
-  { id: 4, name: "GUARINO",  label: "SENIOR S.A", highlight: true, image: "src/img/guarino.png" },
-  { id: 5, name: "DISPO",    label: "SENIOR S.A", highlight: false, image: "src/img/dispo.png" },
+  { id: 1, name: "ROMEROSO", label: "SENIOR S.A", highlight: false, image: "/img/Image_jmil.png" },
+  { id: 2, name: "CLAVIO",   label: "SENIOR S.A", highlight: true, image: "/img/clavio.png" },
+  { id: 3, name: "DEMAIN",   label: "SENIOR S.A", highlight: false, image: "/img/demain.png" },
+  { id: 4, name: "GUARINO",  label: "SENIOR S.A", highlight: true, image: "/img/guarino.png" },
+  { id: 5, name: "DISPO",    label: "SENIOR S.A", highlight: false, image: "/img/dispo.png" },
   
 ];
 
 const NEW_SAS = [
-  { id: 1, name: "ALAGOS",  label: "NEW S.A", image: "src/img/alagos.png" },
-  { id: 2, name: "SELORIO", label: "NEW S.A", image: "src/img/selorio.png" },
-  { id: 3, name: "NARAJA",  label: "NEW S.A", image: "src/img/naraja.png" },
-  { id: 4, name: "SINGHID", label: "NEW S.A", image: "src/img/singhid.png" },
-  { id: 5, name: "AGULLO",  label: "NEW S.A", image: "src/img/agullo.png" },
-  { id: 6, name: "DACULAN",  label: "NEW S.A", image: "src/img/daculan.png" },
-  { id: 7, name: "SOMIDO",  label: "NEW S.A", image: "src/img/somido.png" },
-  { id: 7, name: "ABUT",  label: "NEW S.A", image: "src/img/abut.png" },
-  { id: 8, name: "CALIAGA",  label: "NEW S.A", image: "src/img/caliaga.png" },
-  { id: 9, name: "DELA CRUZ",  label: "NEW S.A", image: "src/img/dela cruz...png" },
-  { id: 10, name: "ALFONSO",  label: "NEW S.A", image: "src/img/alfonso.png" },
+  { id: 1, name: "ALAGOS",  label: "NEW S.A", image: "/img/alagos.png" },
+  { id: 2, name: "SELORIO", label: "NEW S.A", image: "/img/selorio.png" },
+  { id: 3, name: "NARAJA",  label: "NEW S.A", image: "/img/naraja.png" },
+  { id: 4, name: "SINGHID", label: "NEW S.A", image: "/img/singhid.png" },
+  { id: 5, name: "AGULLO",  label: "NEW S.A", image: "/img/agullo.png" },
+  { id: 6, name: "DACULAN",  label: "NEW S.A", image: "/img/daculan.png" },
+  { id: 7, name: "SOMIDO",  label: "NEW S.A", image: "/img/somido.png" },
+  { id: 7, name: "ABUT",  label: "NEW S.A", image: "/img/abut.png" },
+  { id: 8, name: "CALIAGA",  label: "NEW S.A", image: "/img/caliaga.png" },
+  { id: 9, name: "DELA CRUZ",  label: "NEW S.A", image: "/img/dela cruz...png" },
+  { id: 10, name: "ALFONSO",  label: "NEW S.A", image: "/img/alfonso.png" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
