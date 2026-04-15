@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 
 // ── 1. CONFIGURATION & THEME ──
 const GRC_RED = '#C8102E';
@@ -79,6 +80,16 @@ export default function Alumni() {
     jobTitle: '', companyName: '',
   });
 
+  const [status, setStatus] = useState('idle');
+
+  // Initialize EmailJS
+  useEffect(() => {
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    if (publicKey) {
+      emailjs.init(publicKey);
+    }
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -91,12 +102,62 @@ export default function Alumni() {
         email: '', courseMajor: '', yearGraduated: '', contactNo: '',
         jobTitle: '', companyName: '',
       });
+      setStatus('idle');
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert('Form submitted successfully!');
+    
+    // --- DEBUGGING SECTION ---
+    console.log("Submit clicked. Checking environment variables...");
+    console.log("VITE_EMAILJS_SERVICE_ID:", import.meta.env.VITE_EMAILJS_SERVICE_ID);
+    console.log("VITE_ALUMNI_TEMPLATE_ID:", import.meta.env.VITE_ALUMNI_TEMPLATE_ID);
+    console.log("VITE_EMAILJS_PUBLIC_KEY:", import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+    
+    // Simple Validation
+    if (!form.name || !form.email || !form.studentNo) {
+      alert("Please fill in the required fields (Name, Email, and Student Number).");
+      return;
+    }
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_ALUMNI_TEMPLATE_ID;
+
+    if (!serviceId || !templateId) {
+       console.error("Critical Error: Service ID or Template ID is missing from .env!");
+       setStatus('error');
+       return;
+    }
+
+    setStatus('sending');
+
+    try {
+      await emailjs.send(serviceId, templateId, {
+        studentNo: form.studentNo,
+        name: form.name,
+        address: form.address,
+        facebookName: form.facebookName,
+        email: form.email,
+        courseMajor: form.courseMajor,
+        yearGraduated: form.yearGraduated,
+        contactNo: form.contactNo,
+        jobTitle: form.jobTitle,
+        companyName: form.companyName,
+        reply_to: form.email
+      });
+
+      setStatus('success');
+      setForm({
+        studentNo: '', name: '', address: '', facebookName: '',
+        email: '', courseMajor: '', yearGraduated: '', contactNo: '',
+        jobTitle: '', companyName: '',
+      });
+      setTimeout(() => setStatus('idle'), 6000);
+    } catch (err) {
+      console.error("Submission Error Details:", err);
+      setStatus('error');
+    }
   };
 
   return (
@@ -129,10 +190,8 @@ export default function Alumni() {
         <div style={styles.heroBg} />
         <div style={styles.heroOverlay} />
 
-        {/* Red bottom accent line */}
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '6px', backgroundColor: GRC_RED, zIndex: 2 }} />
 
-        {/* Hero content */}
         <div style={{
           position: 'relative',
           zIndex: 3,
@@ -142,7 +201,6 @@ export default function Alumni() {
           width: '100%',
         }}>
 
-          {/* Eyebrow */}
           <div className="hero-eyebrow" style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -162,7 +220,6 @@ export default function Alumni() {
             </span>
           </div>
 
-          {/* Heading — Times New Roman */}
           <h1 className="hero-heading" style={{
             fontFamily: "'Times New Roman', Times, serif",
             color: 'white',
@@ -179,7 +236,6 @@ export default function Alumni() {
             Your Success.
           </h1>
 
-          {/* Divider */}
           <div className="hero-divider" style={{
             display: 'flex',
             alignItems: 'center',
@@ -192,7 +248,6 @@ export default function Alumni() {
             <span style={{ flex: 1, height: '1px', backgroundColor: 'rgba(255,255,255,0.18)' }} />
           </div>
 
-          {/* Body */}
           <p className="hero-body" style={{
             fontFamily: "'Poppins', sans-serif",
             color: 'rgba(255,255,255,0.78)',
@@ -243,12 +298,33 @@ export default function Alumni() {
                 <Field placeholder="Company Name" name="companyName" value={form.companyName} onChange={handleChange} />
               </div>
 
+              {/* Status Message Display */}
+              {status === 'success' && (
+                <div style={{ padding: '12px', borderRadius: '4px', backgroundColor: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid #90EE90', textAlign: 'center', fontSize: '14px' }}>
+                  ✅ Alumni records updated successfully! Thank you for staying connected.
+                </div>
+              )}
+              {status === 'error' && (
+                <div style={{ padding: '12px', borderRadius: '4px', backgroundColor: 'rgba(255,255,255,0.1)', color: '#FFB3B3', textAlign: 'center', fontSize: '14px' }}>
+                  ❌ Submission failed. Check your browser console (F12) for details.
+                </div>
+              )}
+
               <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end', marginTop: '20px' }}>
-                <button type="button" onClick={handleClear} style={{ ...styles.button, backgroundColor: 'transparent', border: '1px solid white' }}>
+                <button 
+                  type="button" 
+                  onClick={handleClear} 
+                  disabled={status === 'sending'}
+                  style={{ ...styles.button, backgroundColor: 'transparent', border: '1px solid white', opacity: status === 'sending' ? 0.5 : 1 }}
+                >
                   Clear Form
                 </button>
-                <button type="submit" style={styles.button}>
-                  Submit!
+                <button 
+                  type="submit" 
+                  disabled={status === 'sending'}
+                  style={{ ...styles.button, opacity: status === 'sending' ? 0.7 : 1 }}
+                >
+                  {status === 'sending' ? 'Submitting...' : 'Submit!'}
                 </button>
               </div>
             </form>

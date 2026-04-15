@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 
 const GRC_RED = '#C8102E';
 
@@ -45,14 +46,9 @@ const styles = {
     backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
     backgroundSize: '200px 200px',
   },
-  socialIcon: {
-    width: '32px',
-    height: '32px',
-    transition: 'transform 0.2s ease',
-    cursor: 'pointer',
-  },
 };
 
+// Custom Hook
 function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState(
     typeof window !== 'undefined' ? window.innerWidth < breakpoint : false
@@ -70,7 +66,7 @@ const INFO_CARDS = [
     id: 1,
     tag: "Case Study",
     title: "Roller Space: Modernizing Operations",
-    body: "An RCE initiative addressing the challenges of manual operation at Roller Space. Our integrated web-based system transitions manual tracking into a streamlined digital experience, solving time-consuming data retrieval for the community.",
+    body: "An RCE initiative addressing the challenges of manual operation at Roller Space. Our integrated web-based system transitions manual tracking into a streamlined digital experience.",
     icon: (
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
         <circle cx="17" cy="17" r="9" stroke="currentColor" strokeWidth="2.5"/>
@@ -86,7 +82,7 @@ const INFO_CARDS = [
     id: 2,
     tag: "Social Impact",
     title: "Community Growth through Tech",
-    body: "Beyond code, we aim for sustainable local growth. By automating inventory and rentals, we empower local skating hubs to serve more citizens safely, fostering a more vibrant recreational community in Metro Manila.",
+    body: "Beyond code, we aim for sustainable local growth. By automating inventory and rentals, we empower local skating hubs to serve more citizens safely.",
     icon: (
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
         <path d="M20 8c-6.627 0-12 5.373-12 12 0 4.418 2.386 8.279 5.928 10.374" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
@@ -103,7 +99,7 @@ const INFO_CARDS = [
     id: 3,
     tag: "Service",
     title: "The Extension Mission",
-    body: "Extension means bringing academic expertise to the doorstep of the people. RCE ensures that IT students use their skills to solve tangible paper-dependency issues, creating zero-paper environments for local enterprises.",
+    body: "RCE ensures that IT students use their skills to solve tangible paper-dependency issues, creating zero-paper environments for local enterprises.",
     icon: (
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
         <path d="M12 20c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
@@ -120,7 +116,7 @@ const INFO_CARDS = [
     id: 4,
     tag: "Research",
     title: "Evidence-Based Solutions",
-    body: "Every implementation is backed by a systematic data gathering procedure. Our research framework ensures that software architecture meets the high-traffic demands of the Metro Manila community effectively.",
+    body: "Every implementation is backed by a systematic data gathering procedure to meet the high-traffic demands of the Metro Manila community.",
     icon: (
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
         <path d="M20 6v4M20 30v4M6 20h4M30 20h4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
@@ -334,202 +330,177 @@ function InfoCarousel() {
 export default function Home() {
   const isMobile = useIsMobile();
 
+  // ── EMAILJS FORM STATE ──
+  const [formData, setFormData] = useState({
+    fullName: '',
+    studentNo: '',
+    message: '',
+  });
+  const [status, setStatus] = useState('idle');
+
+  useEffect(() => {
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    if (publicKey) {
+      emailjs.init(publicKey);
+    }
+  }, []);
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async () => {
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+
+    if (!formData.fullName || !formData.message) {
+      alert('Please fill in your name and message.');
+      return;
+    }
+
+    setStatus('sending');
+    
+    const templateParams = {
+      from_name: formData.fullName,
+      student_no: formData.studentNo,
+      message: formData.message,
+      to_email: "jmilsromeroso@gmail.com",
+    };
+
+    try {
+      await emailjs.send(serviceId, templateId, templateParams);
+      setStatus('success');
+      setFormData({ fullName: '', studentNo: '', message: '' });
+      setTimeout(() => setStatus('idle'), 6000);
+    } catch (err) {
+      console.error("Submission Error:", err);
+      setStatus('error');
+    }
+  };
+
   return (
     <div style={styles.container}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap');
-
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(28px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .hero-eyebrow { animation: fadeUp 0.6s ease both; animation-delay: 0.1s; }
-        .hero-heading { animation: fadeUp 0.7s ease both; animation-delay: 0.25s; }
-        .hero-divider { animation: fadeUp 0.6s ease both; animation-delay: 0.42s; }
-        .hero-body    { animation: fadeUp 0.6s ease both; animation-delay: 0.55s; }
-        .hero-cta     { animation: fadeUp 0.6s ease both; animation-delay: 0.68s; }
-        .hero-image   { animation: fadeUp 0.8s ease both; animation-delay: 0.3s; }
-        .social-icon:hover { transform: scale(1.15); }
-
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+        .hero-inner { animation: fadeUp 0.8s ease forwards; }
         * { box-sizing: border-box; }
-
         @media (max-width: 768px) {
-          .hero-inner {
-            flex-direction: column !important;
-            text-align: center;
-            padding: 80px 24px 60px !important;
-            align-items: center !important;
-          }
-          .hero-text {
-            max-width: 100% !important;
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-          }
-          .hero-image-wrap {
-            order: -1;
-            margin-bottom: 8px;
-          }
-          .hero-divider-wrap {
-            justify-content: center;
-          }
-          .about-inner {
-            flex-direction: column !important;
-            gap: 32px !important;
-          }
-          .about-img img {
-            width: 240px !important;
-            height: 240px !important;
-          }
-          .about-section {
-            padding: 60px 24px !important;
-            margin-left: 0 !important;
-          }
-          .info-section {
-            padding: 60px 20px !important;
-          }
-          .contact-section {
-            padding: 60px 20px !important;
-          }
-          .contact-inner {
-            flex-direction: column !important;
-            gap: 40px !important;
-          }
+          .contact-inner { flex-direction: column !important; gap: 40px !important; }
         }
       `}</style>
 
       {/* ── HERO SECTION ── */}
       <section style={styles.heroSection}>
         <div style={styles.noiseOverlay} />
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '6px', backgroundColor: '#8B0000', zIndex: 2 }} />
-
-        <div className="hero-inner" style={{ ...styles.sectionMax, padding: '0 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '60px', flexWrap: 'wrap', width: '100%', position: 'relative', zIndex: 1 }}>
-          <div className="hero-text" style={{ flex: 1, minWidth: '280px', maxWidth: '580px' }}>
-            <div className="hero-eyebrow" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
-              <span style={{ display: 'block', width: '40px', height: '2px', backgroundColor: 'rgba(255,255,255,0.5)' }} />
-              <span style={{ color: 'rgba(255,255,255,0.65)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase' }}>Building Community Resilience</span>
-            </div>
-
-            <h1 className="hero-heading" style={{ fontFamily: "'Times New Roman', Times, serif", color: 'white', fontSize: 'clamp(34px, 5vw, 66px)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-0.01em', margin: '0' }}>
+        <div style={{ ...styles.sectionMax, padding: '0 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '60px', flexWrap: 'wrap', width: '100%', position: 'relative', zIndex: 1 }}>
+          <div className="hero-inner" style={{ flex: 1, minWidth: '280px', maxWidth: '580px' }}>
+            <h1 style={{ fontFamily: "'Times New Roman', serif", color: 'white', fontSize: 'clamp(34px, 5vw, 66px)', fontWeight: 900, lineHeight: 1.08, margin: '0' }}>
               Research and <span style={{ fontStyle: 'italic' }}>Community</span><br />Extension
             </h1>
-
-            <div className="hero-divider hero-divider-wrap" style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '32px 0', maxWidth: '340px' }}>
-              <span style={{ flex: 1, height: '1px', backgroundColor: 'rgba(255,255,255,0.25)' }} />
-              <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: 'white', flexShrink: 0 }} />
-              <span style={{ flex: 1, height: '1px', backgroundColor: 'rgba(255,255,255,0.25)' }} />
-            </div>
-
-            <p className="hero-body" style={{ color: 'rgba(255,255,255,0.82)', fontSize: '15px', fontWeight: 400, lineHeight: 1.9, maxWidth: '440px', margin: '0 0 44px 0' }}>
-              Empowering society through purposeful research and dedicated service. We bridge the gap between academic theory and community action, turning innovation into lasting impact.
+            <p style={{ color: 'rgba(255,255,255,0.82)', fontSize: '15px', lineHeight: 1.9, maxWidth: '440px', margin: '32px 0 44px' }}>
+              Empowering society through purposeful research and dedicated service. We bridge the gap between academic theory and community action.
             </p>
-
-            <div className="hero-cta">
-              <Link to="/contact" style={styles.btnDark} onMouseEnter={e => e.currentTarget.style.opacity = '0.85'} onMouseLeave={e => e.currentTarget.style.opacity = '1'}>
-                ENROLL NOW!
-                <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8h10M9 4l4 4-4 4" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </Link>
-            </div>
+            <Link to="/contact" style={styles.btnDark}>ENROLL NOW!</Link>
           </div>
-
-          <div className="hero-image hero-image-wrap" style={{ flexShrink: 0 }}>
-            <img src="/img/RCE logo.png" alt="RCE Medallion" style={{ width: 'clamp(200px, 35vw, 460px)', height: 'clamp(200px, 35vw, 460px)', objectFit: 'contain', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }} />
+          <div style={{ flexShrink: 0 }}>
+            <img src="/img/RCE logo.png" alt="Logo" style={{ width: 'clamp(200px, 35vw, 460px)', objectFit: 'contain' }} />
           </div>
         </div>
       </section>
 
       {/* ── INFORMATION SECTION ── */}
-      <section className="info-section" style={{ backgroundColor: '#fafafa', padding: '88px 48px' }}>
+      <section style={{ backgroundColor: '#fafafa', padding: '88px 48px' }}>
         <div style={styles.sectionMax}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 52, flexWrap: 'wrap', gap: 16 }}>
-            <div>
-              <span style={{ display: 'block', color: GRC_RED, fontSize: 11, fontWeight: 700, letterSpacing: '0.26em', textTransform: 'uppercase', marginBottom: 12 }}>RCE Initiatives</span>
-              <h2 style={{ fontFamily: "'Times New Roman', serif", fontWeight: 900, fontSize: 'clamp(24px, 3.5vw, 44px)', color: '#111', margin: 0, lineHeight: 1.1 }}>
-                Innovation for the <span style={{ color: GRC_RED, fontStyle: 'italic' }}>Greater Good</span>
-              </h2>
-            </div>
-          </div>
-          <InfoCarousel />
-          <div style={{ marginTop: 48, height: '2px', background: `linear-gradient(to right, ${GRC_RED}, transparent)`, opacity: 0.15 }} />
+           <InfoCarousel />
         </div>
       </section>
 
       {/* ── ABOUT US SECTION ── */}
-      <section className="about-section" style={{ backgroundColor: 'white', padding: '100px 48px', position: 'relative' }}>
-        <div className="about-inner" style={{ ...styles.sectionMax, display: 'flex', alignItems: 'center', gap: '80px', flexWrap: 'wrap' }}>
-          <div className="about-img" style={{ flex: 1, display: 'flex', justifyContent: 'center', minWidth: '280px' }}>
-            <img src="/img/grc logo.png" alt="GRC Icon" style={{ width: 'clamp(200px, 40vw, 450px)', height: 'clamp(200px, 40vw, 450px)', objectFit: 'contain' }} />
-          </div>
-
-          <div style={{ flex: 1, minWidth: '260px' }}>
-            <p style={{ color: GRC_RED, fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '16px' }}>Our Mission</p>
-            <h2 style={{ fontSize: 'clamp(26px, 4vw, 48px)', fontWeight: 900, color: '#111', lineHeight: 1.15, marginBottom: '25px' }}>
-              Advancing <span style={{ color: GRC_RED }}>Knowledge,</span><br />Serving the <span style={{ color: GRC_RED }}>Community.</span>
-            </h2>
-            <p style={{ color: '#555', fontSize: '16px', lineHeight: 1.8, maxWidth: '520px', marginBottom: '32px' }}>
-              The Research and Community Extension (RCE) office is dedicated to fostering a culture of technical excellence and civic duty. By supporting projects like the Roller Space Integrated System, we prove that digital modernization can enhance both business efficiency and quality of life.
-            </p>
-            <div className="stat-row" style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '36px', flexWrap: 'wrap' }}>
-              {[
-                { val: 'Active', label: 'Research Projects' },
-                { val: '100%', label: 'Commitment' },
-                { val: 'Local', label: 'Partnerships' },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <p style={{ fontSize: '30px', fontWeight: 900, color: '#111', lineHeight: 1 }}>{stat.val}</p>
-                  <p style={{ fontSize: '11px', color: '#999', marginTop: '4px' }}>{stat.label}</p>
-                </div>
-              ))}
-            </div>
-            <Link to="/about" style={{ ...styles.btnDark, backgroundColor: GRC_RED, boxShadow: 'none' }}>Extension Details</Link>
+      <section style={{ backgroundColor: 'white', padding: '100px 48px' }}>
+        <div style={{ ...styles.sectionMax, display: 'flex', alignItems: 'center', gap: '80px', flexWrap: 'wrap' }}>
+          <img src="/img/grc logo.png" alt="GRC" style={{ width: 'clamp(200px, 40vw, 450px)', objectFit: 'contain' }} />
+          <div style={{ flex: 1 }}>
+            <h2 style={{ fontSize: 'clamp(26px, 4vw, 48px)', fontWeight: 900, marginBottom: '25px' }}>Advancing Knowledge, Serving Community.</h2>
+            <p style={{ color: '#555', lineHeight: 1.8, marginBottom: '32px' }}>The RCE office is dedicated to technical excellence and civic duty.</p>
+            <Link to="/about" style={{ ...styles.btnDark, backgroundColor: GRC_RED }}>Extension Details</Link>
           </div>
         </div>
       </section>
 
       {/* ── CONTACT SECTION ── */}
-      <section className="contact-section" style={{ background: `linear-gradient(135deg, #e0102e 0%, #9b0020 100%)`, padding: '80px 32px', position: 'relative', overflow: 'hidden' }}>
+      <section 
+        className="contact-section" 
+        style={{ 
+          background: `linear-gradient(135deg, #e0102e 0%, #9b0020 100%)`, 
+          padding: '120px 32px', // Increased padding to make section taller
+          position: 'relative', 
+          overflow: 'hidden',
+          minHeight: '100vh', // Ensures it takes full screen height
+          display: 'flex',
+          alignItems: 'center'
+        }}
+      >
         <div style={styles.noiseOverlay} />
-        <div style={{ ...styles.sectionMax, position: 'relative', zIndex: 1 }}>
+        <div style={{ ...styles.sectionMax, position: 'relative', zIndex: 1, width: '100%' }}>
           <div style={{ textAlign: 'center', marginBottom: '56px' }}>
-            <h2 style={{ color: 'white', fontSize: 'clamp(22px, 4vw, 46px)', fontWeight: 900, lineHeight: 1.2, marginBottom: '14px' }}>
+            <h2 style={{ color: 'white', fontSize: 'clamp(22px, 4vw, 46px)', fontWeight: 900, marginBottom: '14px' }}>
               Partner with <span style={{ color: '#FFCCD5' }}>RCE Today.</span>
             </h2>
-          </div>
-           <div style={{ textAlign: 'center', marginBottom: '56px' }}>
-            <h4 style={{ color: 'white', fontSize: 'clamp(14px, 2vw, 20px)', fontWeight: 400, lineHeight: 1.5, marginBottom: '5px' }}>
-              Submit your Formal Concern or <span style={{ color: '#FFCCD5' }}>Proposals.</span>
-            </h4>
+            <h5 style={{ color: 'white', fontSize: '1.2rem', fontWeight: 300 }}>
+              Submit your <span style={{ color: '#FFCCD5' }}>Concern Today!</span>
+            </h5>
           </div>
 
           <div className="contact-inner" style={{ display: 'flex', gap: '56px', flexWrap: 'wrap' }}>
-            <div style={{ flex: 1, minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
-              <div>
-                <ContactInfo icon="📍" text={<>454 GRC Building, Rizal Ave Ext,<br />Cor. 9th Avenue Grace Park, Caloocan City</>} />
-                <ContactInfo icon="📞" text="0999-999-9999" />
-                <ContactInfo icon="✉️" text="researchcommunityextension@gmail.com" />
-              </div>
-              <div style={{ borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '24px' }}>
-                <div style={{ display: 'flex', gap: '20px' }}>
-                  <a href="https://www.facebook.com/GrcRCExtension" target="_blank" rel="noreferrer"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="FB" style={styles.socialIcon} className="social-icon" /></a>
-                  <a href="#" target="_blank" rel="noreferrer"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="IG" style={styles.socialIcon} className="social-icon" /></a>
-                  <a href="https://www.tiktok.com" target="_blank" rel="noreferrer"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" style={styles.socialIcon} className="social-icon" /></a>
-                  <a href="https://www.linkedin.com" target="_blank" rel="noreferrer"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" style={styles.socialIcon} className="social-icon"/></a>
-                </div>
-              </div>
+            <div style={{ flex: 1, minWidth: '220px' }}>
+              <ContactInfo icon="📍" text={<>454 GRC Building, Rizal Ave Ext, Grace Park, Caloocan City</>} />
+              <ContactInfo icon="📞" text="0999-999-9999" />
+              <ContactInfo icon="✉️" text="rceassistextension0104@gmail.com" />
             </div>
 
             <div style={{ flex: 1.3, minWidth: '260px' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <input style={styles.inputField} placeholder="Full Name" />
-                <input style={styles.inputField} placeholder="Student No." />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <input style={styles.inputField} placeholder="Full Name" name="fullName" value={formData.fullName} onChange={handleChange} />
+                <input style={styles.inputField} placeholder="Student No." name="studentNo" value={formData.studentNo} onChange={handleChange} />
                 <textarea 
-                   style={{ ...styles.inputField, resize: 'none', minHeight: '290px' }} 
-                   placeholder="Message Concern." 
-                   rows={8} 
+                  style={{ 
+                    ...styles.inputField, 
+                    resize: 'none', 
+                    minHeight: '250px' // Increased from 150px to make the box longer
+                  }} 
+                  placeholder="Message Concern." 
+                  name="message" 
+                  value={formData.message} 
+                  onChange={handleChange} 
                 />
-                <button style={{ ...styles.btnDark, border: 'none', cursor: 'pointer', backgroundColor: '#6B0000', width: '100%', justifyContent: 'center' }}>Submit!</button>
+
+                {status === 'success' && (
+                  <div style={{ padding: '12px', borderRadius: '4px', backgroundColor: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid #90EE90', textAlign: 'center' }}>
+                    ✅ Success! Your message has been submitted to RCE.
+                  </div>
+                )}
+                {status === 'error' && (
+                  <div style={{ padding: '12px', borderRadius: '4px', backgroundColor: 'rgba(255,255,255,0.1)', color: '#FFB3B3', textAlign: 'center' }}>
+                    ❌ Something went wrong. Please check your connection.
+                  </div>
+                )}
+
+                <button
+                  onClick={handleSubmit}
+                  disabled={status === 'sending'}
+                  style={{
+                    ...styles.btnDark,
+                    border: 'none',
+                    cursor: status === 'sending' ? 'not-allowed' : 'pointer',
+                    backgroundColor: '#6B0000',
+                    width: '100%',
+                    justifyContent: 'center',
+                    opacity: status === 'sending' ? 0.7 : 1,
+                  }}
+                >
+                  {status === 'sending' ? 'Sending...' : 'Submit Message!'}
+                </button>
               </div>
             </div>
           </div>
@@ -537,14 +508,13 @@ export default function Home() {
       </section>
 
       {/* ── MAP SECTION ── */}
-      <div style={{ width: '100%', height: '380px' }}>
+      <div style={{ width: '100%', height: '380px', backgroundColor: '#eee' }}>
         <iframe
           title="GRC Location"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d965.0193!2d120.9835096!3d14.6498596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b5d4fab883bb%3A0x96f1adb22bed4d5e!2sGlobal%20Reciprocal%20Colleges%20-%20GRC!5e0!3m2!1sen!2sph!4v1744000000000!5m2!1sen!2sph"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.0524458514127!2d120.98404287510714!3d14.653013885841454!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b5d63f9d5555%3A0x66f68748d5334c9c!2sGlobal%20Reciprocal%20Colleges!5e0!3m2!1sen!2sph!4v1713145600000!5m2!1sen!2sph"
           style={{ width: '100%', height: '100%', border: 'none' }}
           loading="lazy"
-          allowFullScreenno
-          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
         />
       </div>
     </div>

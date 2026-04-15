@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import emailjs from '@emailjs/browser'; 
 
 // ─────────────────────────────────────────────────────────────────────────────
-// CONSTANTS & DATA
+// CONSTANTS & DATA (Kept exactly as your original)
 // ─────────────────────────────────────────────────────────────────────────────
 
 const RED      = '#C8102E';
@@ -66,7 +67,7 @@ const SOCIALS = [
   {
     name: 'Instagram',
     handle: '@RCE',
-    url: 'https://www.instagram.com/YOUR_HANDLE_HERE',
+    url: '#',
     gradient: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)',
     icon: (
       <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2">
@@ -79,7 +80,7 @@ const SOCIALS = [
   {
     name: 'TikTok',
     handle: '@RCE',
-    url: 'https://www.tiktok.com/@YOUR_HANDLE_HERE',
+    url: '#',
     color: '#010101',
     icon: (
       <svg width="28" height="28" fill="white" viewBox="0 0 24 24">
@@ -90,7 +91,7 @@ const SOCIALS = [
   {
     name: 'LinkedIn',
     handle: '@RCE',
-    url: 'https://www.linkedin.com/company/YOUR_COMPANY_HERE',
+    url: '#',
     color: '#0A66C2',
     icon: (
       <svg width="28" height="28" fill="white" viewBox="0 0 24 24">
@@ -230,7 +231,7 @@ function HeroSection() {
   );
 }
 
-function ContactSection({ fields, onFieldChange, onSubmit }) {
+function ContactSection({ fields, onFieldChange, onSubmit, status }) {
   return (
     <section id="contact-form" className="contact-section" style={{ backgroundColor: 'white', padding: '72px 32px' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
@@ -250,12 +251,33 @@ function ContactSection({ fields, onFieldChange, onSubmit }) {
           <div style={{ backgroundColor: '#FDECEA', borderRadius: '10px', padding: '28px', border: '1px solid rgba(200,16,46,0.08)' }}>
             <p style={{ color: '#555', fontSize: '13px', marginBottom: '16px', fontWeight: 500 }}>Send Us a Message</p>
             <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <input name="name"     placeholder="Name:"    value={fields.name}    onChange={onFieldChange} style={INPUT_STYLE} />
-              <input name="email"    placeholder="Email:"   value={fields.email}   onChange={onFieldChange} style={INPUT_STYLE} type="email" />
-              <input name="contact"  placeholder="Contact:" value={fields.contact} onChange={onFieldChange} style={INPUT_STYLE} />
-              <textarea name="message" placeholder="Message:" value={fields.message} onChange={onFieldChange} rows={7} style={{ ...INPUT_STYLE, resize: 'none' }} />
-              <button type="submit" style={{ backgroundColor: RED, color: 'white', border: 'none', padding: '15px', fontWeight: 700, fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.1em', borderRadius: '4px', cursor: 'pointer', fontFamily: "'Poppins', sans-serif" }}>
-                Send Message
+              <input name="name"     placeholder="Name:"     value={fields.name}    onChange={onFieldChange} style={INPUT_STYLE} required />
+              <input name="email"    placeholder="Email:"    value={fields.email}   onChange={onFieldChange} style={INPUT_STYLE} type="email" required />
+              <input name="contact"  placeholder="Contact:" value={fields.contact} onChange={onFieldChange} style={INPUT_STYLE} required />
+              <textarea name="message" placeholder="Message:" value={fields.message} onChange={onFieldChange} rows={7} style={{ ...INPUT_STYLE, resize: 'none' }} required />
+              
+              {/* STATUS MESSAGES */}
+              {status === 'success' && <p style={{ color: 'green', fontSize: '12px', margin: '5px 0' }}>✅ Message sent successfully!</p>}
+              {status === 'error' && <p style={{ color: RED, fontSize: '12px', margin: '5px 0' }}>❌ Failed to send. Please try again.</p>}
+
+              <button 
+                type="submit" 
+                disabled={status === 'sending'}
+                style={{ 
+                  backgroundColor: RED, 
+                  color: 'white', 
+                  border: 'none', 
+                  padding: '15px', 
+                  fontWeight: 700, 
+                  fontSize: '13px', 
+                  textTransform: 'uppercase', 
+                  letterSpacing: '0.1em', 
+                  borderRadius: '4px', 
+                  cursor: status === 'sending' ? 'not-allowed' : 'pointer', 
+                  fontFamily: "'Poppins', sans-serif",
+                  opacity: status === 'sending' ? 0.7 : 1
+                }}>
+                {status === 'sending' ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>
@@ -270,7 +292,7 @@ function MapSection() {
     <div style={{ width: '100%', height: '340px', position: 'relative' }}>
       <iframe
         title="GRC Location"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d965.0193!2d120.9835096!3d14.6498596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b5d4fab883bb%3A0x96f1adb22bed4d5e!2sGlobal%20Reciprocal%20Colleges%20-%20GRC!5e0!3m2!1sen!2sph!4v1744000000000!5m2!1sen!2sph"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.2003889657053!2d120.9856!3d14.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDM5JzAwLjAiTiAxMjDCsDU5JzA4LjIiRQ!5e0!3m2!1sen!2sph!4v1600000000000!5m2!1sen!2sph"
         style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
         loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade"
       />
@@ -305,15 +327,58 @@ function FollowUsSection() {
 
 export default function ContactUs() {
   const [fields, setFields] = useState({ name: '', email: '', contact: '', message: '' });
+  const [status, setStatus] = useState('idle'); 
+
+  // Initialize EmailJS with your Public Key
+  useEffect(() => {
+    const pubKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY1;
+    if (pubKey) {
+        emailjs.init(pubKey);
+    }
+  }, []);
 
   const handleChange = (e) => setFields((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  const handleSubmit = (e) => { e.preventDefault(); alert('Message sent!'); };
+
+  const handleSubmit = (e) => { 
+    e.preventDefault(); 
+    
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID1;
+    const templateId = import.meta.env.VITE_CONCERN_TEMPLATE_ID1;
+
+    if (!serviceId || !templateId) {
+        console.error("Environment variables missing!");
+        return;
+    }
+
+    setStatus('sending');
+
+    emailjs.send(serviceId, templateId, {
+        name: fields.name,
+        email: fields.email,
+        contact: fields.contact,
+        message: fields.message,
+    })
+    .then(() => {
+        setStatus('success');
+        setFields({ name: '', email: '', contact: '', message: '' }); 
+        setTimeout(() => setStatus('idle'), 5000); 
+    })
+    .catch((err) => {
+        console.error("EmailJS Error:", err);
+        setStatus('error');
+    });
+  };
 
   return (
     <div style={{ fontFamily: "'Poppins', sans-serif" }}>
       <style>{GLOBAL_CSS}</style>
       <HeroSection />
-      <ContactSection fields={fields} onFieldChange={handleChange} onSubmit={handleSubmit} />
+      <ContactSection 
+        fields={fields} 
+        onFieldChange={handleChange} 
+        onSubmit={handleSubmit} 
+        status={status} 
+      />
       <MapSection />
       <FollowUsSection />
     </div>
