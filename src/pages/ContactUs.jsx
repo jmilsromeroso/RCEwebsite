@@ -74,6 +74,13 @@ const INPUT_STYLE = {
 const GLOBAL_CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap');
   *, *::before, *::after { box-sizing: border-box; }
+  
+  html, body { 
+    margin: 0; 
+    padding: 0; 
+    overflow-x: hidden; 
+    width: 100%; 
+  }
 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(28px); }
@@ -85,20 +92,47 @@ const GLOBAL_CSS = `
   .hero-body    { animation: fadeUp 0.6s ease both; animation-delay: 0.55s; }
   .hero-image   { animation: fadeUp 0.8s ease both; animation-delay: 0.30s; }
 
-  /* MOBILE RESPONSIVENESS */
+  /* DYNAMIC GRID UTILITIES */
+  .contact-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1.4fr; 
+    gap: 32px; 
+    align-items: start;
+  }
+
+  .social-grid { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 16px; 
+  }
+
+  /* RESPONSIVE OVERRIDES */
   @media (max-width: 960px) {
-    .hero-inner { flex-direction: column !important; text-align: center; padding: 100px 24px !important; gap: 40px !important; }
+    .hero-inner { 
+      flex-direction: column !important; 
+      text-align: center !important; 
+      padding: 80px 24px !important; 
+      gap: 40px !important; 
+      justify-content: center !important;
+    }
     .hero-divider { margin: 0 auto 20px !important; }
     .hero-body { margin: 0 auto !important; }
     .contact-grid { grid-template-columns: 1fr !important; }
-    .social-grid  { grid-template-columns: repeat(2, 1fr) !important; }
+    .social-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .info-card-container { order: 2; }
+    .form-container { order: 1; }
   }
 
   @media (max-width: 560px) {
-    .hero-heading { font-size: 32px !important; }
-    .social-grid  { grid-template-columns: 1fr !important; }
+    .hero-heading { font-size: 2.2rem !important; }
+    .social-grid { grid-template-columns: 1fr !important; }
     .contact-section { padding: 48px 20px !important; }
-    .hero-image img { width: 240px !important; height: 240px !important; }
+    .hero-image img { 
+       width: 80vw !important; 
+       height: auto !important; 
+       max-width: 300px !important; 
+    }
+    .hero-inner { padding: 60px 20px !important; }
   }
 `;
 
@@ -117,7 +151,7 @@ function InfoCard({ card }) {
       </div>
       <div style={{ paddingLeft: '44px' }}>
         {card.lines.map((line, i) => (
-          <p key={i} style={{ color: '#555', fontSize: '13px', lineHeight: 1.7, margin: 0 }}>{line}</p>
+          <p key={i} style={{ color: '#555', fontSize: '13px', lineHeight: 1.7, margin: 0, wordBreak: 'break-word' }}>{line}</p>
         ))}
       </div>
     </div>
@@ -162,12 +196,12 @@ function HeroSection() {
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '6px', backgroundColor: DARK_RED, zIndex: 2 }} />
 
       <div className="hero-inner" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '60px', position: 'relative', zIndex: 1, width: '100%' }}>
-        <div style={{ flex: 1, minWidth: '300px', maxWidth: '580px' }}>
+        <div style={{ flex: 1, minWidth: '280px', maxWidth: '580px' }}>
           <div className="hero-eyebrow" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
             <span style={{ display: 'block', width: '40px', height: '2px', backgroundColor: 'rgba(255,255,255,0.5)' }} />
             <span style={{ color: 'rgba(255,255,255,0.65)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase' }}>Contact Us</span>
           </div>
-          <h1 className="hero-heading" style={{ color: 'white', fontSize: 'clamp(32px, 5vw, 66px)', fontFamily: "'Times New Roman', Times, serif", fontWeight: 900, lineHeight: 1.08, letterSpacing: '-0.01em', margin: '0 0 20px 0' }}>
+          <h1 className="hero-heading" style={{ color: 'white', fontSize: 'clamp(32px, 5vw, 66px)', fontFamily: "'Times New Roman', Times, serif", fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.01em', margin: '0 0 20px 0' }}>
             Let's Build Your <span style={{ fontStyle: 'italic' }}>Future,</span><br />Together.
           </h1>
           <div className="hero-divider" style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '0 0 20px 0', maxWidth: '320px' }}>
@@ -181,7 +215,7 @@ function HeroSection() {
         </div>
 
         <div className="hero-image" style={{ flexShrink: 0 }}>
-          <img src="/img/nstp removebg-preview.png" alt="NSTP Logo" style={{ width: 'clamp(260px, 35vw, 460px)', height: 'clamp(260px, 35vw, 460px)', objectFit: 'contain', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }} />
+          <img src="/img/nstp removebg-preview.png" alt="NSTP Logo" style={{ width: 'clamp(260px, 35vw, 460px)', height: 'auto', maxHeight: '460px', objectFit: 'contain', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }} />
         </div>
       </div>
     </section>
@@ -200,12 +234,12 @@ function ContactSection({ fields, onFieldChange, onSubmit, status }) {
           No obligation, no runaround. Whether you're looking to connect with alumni, need guidance, or just want to know your options.
         </p>
 
-        <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: '32px', alignItems: 'start' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div className="contact-grid">
+          <div className="info-card-container" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {INFO_CARDS.map((card) => <InfoCard key={card.title} card={card} />)}
           </div>
 
-          <div style={{ backgroundColor: '#FDECEA', borderRadius: '10px', padding: '28px', border: '1px solid rgba(200,16,46,0.08)' }}>
+          <div className="form-container" style={{ backgroundColor: '#FDECEA', borderRadius: '10px', padding: 'min(28px, 5vw)', border: '1px solid rgba(200,16,46,0.08)' }}>
             <p style={{ color: '#555', fontSize: '13px', marginBottom: '16px', fontWeight: 500 }}>Send Us a Message</p>
             <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <input name="name" placeholder="Name:" value={fields.name} onChange={onFieldChange} style={INPUT_STYLE} required />
@@ -223,7 +257,7 @@ function ContactSection({ fields, onFieldChange, onSubmit, status }) {
                   backgroundColor: RED, color: 'white', border: 'none', padding: '15px', 
                   fontWeight: 700, fontSize: '13px', textTransform: 'uppercase', 
                   borderRadius: '4px', cursor: status === 'sending' ? 'not-allowed' : 'pointer',
-                  opacity: status === 'sending' ? 0.7 : 1
+                  opacity: status === 'sending' ? 0.7 : 1, transition: '0.2s opacity'
                 }}>
                 {status === 'sending' ? 'Sending...' : 'Send Message'}
               </button>
@@ -254,10 +288,10 @@ function FollowUsSection() {
     <section style={{ background: 'linear-gradient(170deg, #9b0020 0%, #6b0010 100%)', padding: '64px 32px', position: 'relative' }}>
       <div style={{ position: 'absolute', inset: 0, opacity: 0.04, pointerEvents: 'none', backgroundImage: NOISE_TEXTURE }} />
       <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
-        <h2 style={{ color: 'white', fontWeight: 900, fontSize: '28px', textTransform: 'uppercase', marginBottom: '32px' }}>
+        <h2 style={{ color: 'white', fontWeight: 900, fontSize: '28px', textTransform: 'uppercase', marginBottom: '32px', letterSpacing: '0.05em' }}>
           Follow Us <span style={{ color: '#FFD0D8' }}>Online</span>
         </h2>
-        <div className="social-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+        <div className="social-grid">
           {SOCIALS.map((social) => <SocialCard key={social.name} social={social} />)}
         </div>
       </div>
@@ -297,7 +331,7 @@ export default function ContactUs() {
   };
 
   return (
-    <div style={{ fontFamily: "'Poppins', sans-serif" }}>
+    <div style={{ fontFamily: "'Poppins', sans-serif", width: '100%' }}>
       <style>{GLOBAL_CSS}</style>
       <HeroSection />
       <ContactSection fields={fields} onFieldChange={handleChange} onSubmit={handleSubmit} status={status} />
