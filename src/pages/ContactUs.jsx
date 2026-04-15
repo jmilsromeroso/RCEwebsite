@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser'; 
 
 // ─────────────────────────────────────────────────────────────────────────────
-// CONSTANTS & DATA (Kept exactly as your original)
+// CONSTANTS & DATA
 // ─────────────────────────────────────────────────────────────────────────────
 
 const RED      = '#C8102E';
@@ -42,7 +42,7 @@ const INFO_CARDS = [
   },
   {
     title: 'Office Hours',
-    lines: ['MONDAY - SATURDAY', '8:00AM – 5:00PM', '', 'SUNDAY – Closed'],
+    lines: ['MONDAY - SATURDAY', '8:00AM – 5:00PM', 'SUNDAY – Closed'],
     icon: (
       <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke={RED} strokeWidth="2">
         <circle cx="12" cy="12" r="10"/>
@@ -53,53 +53,10 @@ const INFO_CARDS = [
 ];
 
 const SOCIALS = [
-  {
-    name: 'Facebook',
-    handle: '@RCE',
-    url: 'https://www.facebook.com/GrcRCExtension',
-    color: '#1877F2',
-    icon: (
-      <svg width="28" height="28" fill="white" viewBox="0 0 24 24">
-        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
-      </svg>
-    ),
-  },
-  {
-    name: 'Instagram',
-    handle: '@RCE',
-    url: '#',
-    gradient: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)',
-    icon: (
-      <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2">
-        <rect x="2" y="2" width="20" height="20" rx="5"/>
-        <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
-        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-      </svg>
-    ),
-  },
-  {
-    name: 'TikTok',
-    handle: '@RCE',
-    url: '#',
-    color: '#010101',
-    icon: (
-      <svg width="28" height="28" fill="white" viewBox="0 0 24 24">
-        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/>
-      </svg>
-    ),
-  },
-  {
-    name: 'LinkedIn',
-    handle: '@RCE',
-    url: '#',
-    color: '#0A66C2',
-    icon: (
-      <svg width="28" height="28" fill="white" viewBox="0 0 24 24">
-        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
-        <circle cx="4" cy="4" r="2"/>
-      </svg>
-    ),
-  },
+  { name: 'Facebook', handle: '@RCE', url: 'https://www.facebook.com/GrcRCExtension', color: '#1877F2', icon: <svg width="24" height="24" fill="white" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> },
+  { name: 'Instagram', handle: '@RCE', url: '#', gradient: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)', icon: <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> },
+  { name: 'TikTok', handle: '@RCE', url: '#', color: '#010101', icon: <svg width="24" height="24" fill="white" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg> },
+  { name: 'LinkedIn', handle: '@RCE', url: '#', color: '#0A66C2', icon: <svg width="24" height="24" fill="white" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg> },
 ];
 
 const INPUT_STYLE = {
@@ -112,7 +69,6 @@ const INPUT_STYLE = {
   color: '#333',
   fontFamily: "'Poppins', sans-serif",
   backgroundColor: 'white',
-  boxSizing: 'border-box',
 };
 
 const GLOBAL_CSS = `
@@ -129,18 +85,20 @@ const GLOBAL_CSS = `
   .hero-body    { animation: fadeUp 0.6s ease both; animation-delay: 0.55s; }
   .hero-image   { animation: fadeUp 0.8s ease both; animation-delay: 0.30s; }
 
-  @media (max-width: 900px) {
+  /* MOBILE RESPONSIVENESS */
+  @media (max-width: 960px) {
+    .hero-inner { flex-direction: column !important; text-align: center; padding: 100px 24px !important; gap: 40px !important; }
+    .hero-divider { margin: 0 auto 20px !important; }
+    .hero-body { margin: 0 auto !important; }
     .contact-grid { grid-template-columns: 1fr !important; }
     .social-grid  { grid-template-columns: repeat(2, 1fr) !important; }
-    .hero-inner   { flex-direction: column !important; align-items: flex-start !important; padding: 60px 24px 64px !important; }
-    .hero-image   { align-self: center !important; }
-    .hero-image img { width: clamp(240px, 60vw, 360px) !important; height: clamp(240px, 60vw, 360px) !important; }
   }
 
   @media (max-width: 560px) {
-    .hero-heading    { font-size: 28px !important; }
-    .social-grid     { grid-template-columns: repeat(2, 1fr) !important; }
+    .hero-heading { font-size: 32px !important; }
+    .social-grid  { grid-template-columns: 1fr !important; }
     .contact-section { padding: 48px 20px !important; }
+    .hero-image img { width: 240px !important; height: 240px !important; }
   }
 `;
 
@@ -172,7 +130,6 @@ function SocialCard({ social }) {
       href={social.url}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`Visit our ${social.name} page`}
       style={{
         textDecoration: 'none',
         display: 'flex', flexDirection: 'column',
@@ -204,7 +161,7 @@ function HeroSection() {
       <div style={{ position: 'absolute', inset: 0, opacity: 0.06, pointerEvents: 'none', backgroundImage: NOISE_TEXTURE, backgroundSize: '200px 200px' }} />
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '6px', backgroundColor: DARK_RED, zIndex: 2 }} />
 
-      <div className="hero-inner" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '60px', flexWrap: 'wrap', position: 'relative', zIndex: 1, width: '100%' }}>
+      <div className="hero-inner" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '60px', position: 'relative', zIndex: 1, width: '100%' }}>
         <div style={{ flex: 1, minWidth: '300px', maxWidth: '580px' }}>
           <div className="hero-eyebrow" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
             <span style={{ display: 'block', width: '40px', height: '2px', backgroundColor: 'rgba(255,255,255,0.5)' }} />
@@ -224,7 +181,7 @@ function HeroSection() {
         </div>
 
         <div className="hero-image" style={{ flexShrink: 0 }}>
-          <img src="/img/nstp removebg-preview.png" alt="NSTP Logo" style={{ width: 'clamp(280px, 35vw, 460px)', height: 'clamp(280px, 35vw, 460px)', objectFit: 'contain', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }} />
+          <img src="/img/nstp removebg-preview.png" alt="NSTP Logo" style={{ width: 'clamp(260px, 35vw, 460px)', height: 'clamp(260px, 35vw, 460px)', objectFit: 'contain', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }} />
         </div>
       </div>
     </section>
@@ -233,14 +190,14 @@ function HeroSection() {
 
 function ContactSection({ fields, onFieldChange, onSubmit, status }) {
   return (
-    <section id="contact-form" className="contact-section" style={{ backgroundColor: 'white', padding: '72px 32px' }}>
+    <section id="contact-form" className="contact-section" style={{ backgroundColor: 'white', padding: '80px 32px' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         <p style={{ color: '#888', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '8px' }}>Contact Information</p>
         <h2 style={{ fontSize: 'clamp(22px, 3.5vw, 36px)', fontWeight: 900, color: '#111', marginBottom: '12px' }}>
           Start with a free <span style={{ color: RED }}>Consultation</span>
         </h2>
         <p style={{ color: '#666', fontSize: '13px', lineHeight: 1.75, maxWidth: '480px', marginBottom: '40px' }}>
-          No obligation, no runaround. Whether you're looking to connect with alumni, need guidance, or just want to know your options — we're happy to talk it through.
+          No obligation, no runaround. Whether you're looking to connect with alumni, need guidance, or just want to know your options.
         </p>
 
         <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: '32px', alignItems: 'start' }}>
@@ -251,30 +208,21 @@ function ContactSection({ fields, onFieldChange, onSubmit, status }) {
           <div style={{ backgroundColor: '#FDECEA', borderRadius: '10px', padding: '28px', border: '1px solid rgba(200,16,46,0.08)' }}>
             <p style={{ color: '#555', fontSize: '13px', marginBottom: '16px', fontWeight: 500 }}>Send Us a Message</p>
             <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <input name="name"     placeholder="Name:"     value={fields.name}    onChange={onFieldChange} style={INPUT_STYLE} required />
-              <input name="email"    placeholder="Email:"    value={fields.email}   onChange={onFieldChange} style={INPUT_STYLE} type="email" required />
-              <input name="contact"  placeholder="Contact:" value={fields.contact} onChange={onFieldChange} style={INPUT_STYLE} required />
-              <textarea name="message" placeholder="Message:" value={fields.message} onChange={onFieldChange} rows={7} style={{ ...INPUT_STYLE, resize: 'none' }} required />
+              <input name="name" placeholder="Name:" value={fields.name} onChange={onFieldChange} style={INPUT_STYLE} required />
+              <input name="email" placeholder="Email:" value={fields.email} onChange={onFieldChange} style={INPUT_STYLE} type="email" required />
+              <input name="contact" placeholder="Contact:" value={fields.contact} onChange={onFieldChange} style={INPUT_STYLE} required />
+              <textarea name="message" placeholder="Message:" value={fields.message} onChange={onFieldChange} rows={6} style={{ ...INPUT_STYLE, resize: 'none' }} required />
               
-              {/* STATUS MESSAGES */}
-              {status === 'success' && <p style={{ color: 'green', fontSize: '12px', margin: '5px 0' }}>✅ Message sent successfully!</p>}
-              {status === 'error' && <p style={{ color: RED, fontSize: '12px', margin: '5px 0' }}>❌ Failed to send. Please try again.</p>}
+              {status === 'success' && <p style={{ color: 'green', fontSize: '12px' }}>✅ Message sent successfully!</p>}
+              {status === 'error' && <p style={{ color: RED, fontSize: '12px' }}>❌ Failed to send. Please try again.</p>}
 
               <button 
                 type="submit" 
                 disabled={status === 'sending'}
                 style={{ 
-                  backgroundColor: RED, 
-                  color: 'white', 
-                  border: 'none', 
-                  padding: '15px', 
-                  fontWeight: 700, 
-                  fontSize: '13px', 
-                  textTransform: 'uppercase', 
-                  letterSpacing: '0.1em', 
-                  borderRadius: '4px', 
-                  cursor: status === 'sending' ? 'not-allowed' : 'pointer', 
-                  fontFamily: "'Poppins', sans-serif",
+                  backgroundColor: RED, color: 'white', border: 'none', padding: '15px', 
+                  fontWeight: 700, fontSize: '13px', textTransform: 'uppercase', 
+                  borderRadius: '4px', cursor: status === 'sending' ? 'not-allowed' : 'pointer',
                   opacity: status === 'sending' ? 0.7 : 1
                 }}>
                 {status === 'sending' ? 'Sending...' : 'Send Message'}
@@ -292,27 +240,23 @@ function MapSection() {
     <div style={{ width: '100%', height: '340px', position: 'relative' }}>
       <iframe
         title="GRC Location"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.2003889657053!2d120.9856!3d14.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDM5JzAwLjAiTiAxMjDCsDU5JzA4LjIiRQ!5e0!3m2!1sen!2sph!4v1600000000000!5m2!1sen!2sph"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.055961608823!2d120.9858348757451!3d14.652784585841071!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b6002f231e33%3A0xc3f8376e19c01f41!2sGlobal%20Reciprocal%20Colleges!5e0!3m2!1sen!2sph!4v1713214567890!5m2!1sen!2sph"
         style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
-        loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade"
+        loading="lazy" allowFullScreen
       />
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '4px', backgroundColor: RED }} />
     </div>
-    );
+  );
 }
 
 function FollowUsSection() {
   return (
-    <section style={{ background: 'linear-gradient(170deg, #9b0020 0%, #6b0010 100%)', padding: '64px 32px', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', inset: 0, opacity: 0.04, pointerEvents: 'none', backgroundImage: NOISE_TEXTURE, backgroundSize: '200px 200px' }} />
-      <div style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
-        <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '10px' }}>Stay Connected</p>
-        <h2 style={{ color: 'white', fontWeight: 900, fontSize: 'clamp(26px, 4vw, 42px)', textTransform: 'uppercase', marginBottom: '10px', letterSpacing: '0.03em' }}>
+    <section style={{ background: 'linear-gradient(170deg, #9b0020 0%, #6b0010 100%)', padding: '64px 32px', position: 'relative' }}>
+      <div style={{ position: 'absolute', inset: 0, opacity: 0.04, pointerEvents: 'none', backgroundImage: NOISE_TEXTURE }} />
+      <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+        <h2 style={{ color: 'white', fontWeight: 900, fontSize: '28px', textTransform: 'uppercase', marginBottom: '32px' }}>
           Follow Us <span style={{ color: '#FFD0D8' }}>Online</span>
         </h2>
-        <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '13px', lineHeight: 1.7, maxWidth: '380px', margin: '0 auto 44px' }}>
-          Stay up to date with news, tips, and updates from our team.
-        </p>
         <div className="social-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
           {SOCIALS.map((social) => <SocialCard key={social.name} social={social} />)}
         </div>
@@ -329,56 +273,34 @@ export default function ContactUs() {
   const [fields, setFields] = useState({ name: '', email: '', contact: '', message: '' });
   const [status, setStatus] = useState('idle'); 
 
-  // Initialize EmailJS with your Public Key
   useEffect(() => {
     const pubKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY1;
-    if (pubKey) {
-        emailjs.init(pubKey);
-    }
+    if (pubKey) emailjs.init(pubKey);
   }, []);
 
   const handleChange = (e) => setFields((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = (e) => { 
     e.preventDefault(); 
-    
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID1;
     const templateId = import.meta.env.VITE_CONCERN_TEMPLATE_ID1;
-
-    if (!serviceId || !templateId) {
-        console.error("Environment variables missing!");
-        return;
-    }
+    if (!serviceId || !templateId) return;
 
     setStatus('sending');
-
-    emailjs.send(serviceId, templateId, {
-        name: fields.name,
-        email: fields.email,
-        contact: fields.contact,
-        message: fields.message,
-    })
-    .then(() => {
+    emailjs.send(serviceId, templateId, fields)
+      .then(() => {
         setStatus('success');
         setFields({ name: '', email: '', contact: '', message: '' }); 
         setTimeout(() => setStatus('idle'), 5000); 
-    })
-    .catch((err) => {
-        console.error("EmailJS Error:", err);
-        setStatus('error');
-    });
+      })
+      .catch(() => setStatus('error'));
   };
 
   return (
     <div style={{ fontFamily: "'Poppins', sans-serif" }}>
       <style>{GLOBAL_CSS}</style>
       <HeroSection />
-      <ContactSection 
-        fields={fields} 
-        onFieldChange={handleChange} 
-        onSubmit={handleSubmit} 
-        status={status} 
-      />
+      <ContactSection fields={fields} onFieldChange={handleChange} onSubmit={handleSubmit} status={status} />
       <MapSection />
       <FollowUsSection />
     </div>
