@@ -48,7 +48,7 @@ const styles = {
   },
 };
 
-// Custom Hook
+// ── CUSTOM HOOK ──
 function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState(
     typeof window !== 'undefined' ? window.innerWidth < breakpoint : false
@@ -278,44 +278,9 @@ function InfoCarousel() {
             ))}
           </div>
 
-          {isMobile && (
-            <h3 style={{ fontFamily: "'Times New Roman', serif", color: '#111', fontSize: 'clamp(18px, 5vw, 26px)', fontWeight: 900, lineHeight: 1.2, margin: '0 0 16px' }}>
-              {card.title}
-            </h3>
-          )}
-
           <p style={{ color: '#374151', fontSize: 'clamp(13px, 1.1vw, 16px)', lineHeight: 1.95, margin: `0 0 ${isMobile ? '24px' : '44px'}`, maxWidth: 500 }}>
             {card.body}
           </p>
-
-          {!isMobile && (
-            <div style={{ display: 'flex', gap: 10, marginBottom: 32 }}>
-              {INFO_CARDS.filter((_, i) => i !== active).map((c) => (
-                <div key={c.id} className="ic-thumb" onClick={() => goTo(INFO_CARDS.indexOf(c))}
-                  style={{
-                    flex: 1, borderRadius: 10,
-                    border: '1.5px solid rgba(200,16,46,0.12)',
-                    background: '#fef2f4', padding: '12px 14px',
-                    display: 'flex', gap: 8, alignItems: 'center',
-                  }}>
-                  <div style={{ color: GRC_RED, flexShrink: 0, opacity: 0.7, transform: 'scale(0.6)', transformOrigin: 'left center' }}>{c.icon}</div>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: '#374151', letterSpacing: '0.04em', lineHeight: 1.4 }}>{c.tag}</span>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {isMobile && (
-            <div style={{ display: 'flex', gap: 6, marginBottom: 20 }}>
-              {INFO_CARDS.map((_, i) => (
-                <div key={i} onClick={() => goTo(i)} style={{
-                  width: i === active ? 20 : 8, height: 8, borderRadius: 4,
-                  background: i === active ? GRC_RED : 'rgba(200,16,46,0.25)',
-                  transition: 'width 0.3s ease', cursor: 'pointer',
-                }} />
-              ))}
-            </div>
-          )}
 
           <div style={{ display: 'flex', gap: 10 }}>
             <NavBtn onClick={() => advance(-1)} dark>‹</NavBtn>
@@ -326,6 +291,10 @@ function InfoCarousel() {
     </div>
   );
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MAIN PAGE COMPONENT
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default function Home() {
   const isMobile = useIsMobile();
@@ -338,6 +307,7 @@ export default function Home() {
   });
   const [status, setStatus] = useState('idle');
 
+  // Initialize using your 2nd set of credentials
   useEffect(() => {
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
     if (publicKey) {
@@ -349,9 +319,11 @@ export default function Home() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
+    
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const templateId = import.meta.env.VITE_CONCERN_TEMPLATE_ID;
 
     if (!formData.fullName || !formData.message) {
       alert('Please fill in your name and message.');
@@ -370,7 +342,7 @@ export default function Home() {
     try {
       await emailjs.send(serviceId, templateId, templateParams);
       setStatus('success');
-      setFormData({ fullName: '', studentNo: '', message: '' });
+      setFormData({ fullName: '', studentNo: '', message: '' }); 
       setTimeout(() => setStatus('idle'), 6000);
     } catch (err) {
       console.error("Submission Error:", err);
@@ -433,10 +405,10 @@ export default function Home() {
         className="contact-section" 
         style={{ 
           background: `linear-gradient(135deg, #e0102e 0%, #9b0020 100%)`, 
-          padding: '120px 32px', // Increased padding to make section taller
+          padding: '120px 32px', 
           position: 'relative', 
           overflow: 'hidden',
-          minHeight: '100vh', // Ensures it takes full screen height
+          minHeight: '100vh', 
           display: 'flex',
           alignItems: 'center'
         }}
@@ -454,25 +426,26 @@ export default function Home() {
 
           <div className="contact-inner" style={{ display: 'flex', gap: '56px', flexWrap: 'wrap' }}>
             <div style={{ flex: 1, minWidth: '220px' }}>
-              <ContactInfo icon="📍" text={<>454 GRC Building, Rizal Ave Ext, Grace Park, Caloocan City</>} />
+              <ContactInfo icon="📍" text="454 GRC Building, Rizal Ave Ext, Grace Park, Caloocan City" />
               <ContactInfo icon="📞" text="0999-999-9999" />
               <ContactInfo icon="✉️" text="rceassistextension0104@gmail.com" />
             </div>
 
             <div style={{ flex: 1.3, minWidth: '260px' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <input style={styles.inputField} placeholder="Full Name" name="fullName" value={formData.fullName} onChange={handleChange} />
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <input style={styles.inputField} placeholder="Full Name" name="fullName" value={formData.fullName} onChange={handleChange} required />
                 <input style={styles.inputField} placeholder="Student No." name="studentNo" value={formData.studentNo} onChange={handleChange} />
                 <textarea 
                   style={{ 
                     ...styles.inputField, 
                     resize: 'none', 
-                    minHeight: '250px' // Increased from 150px to make the box longer
+                    minHeight: '250px' 
                   }} 
                   placeholder="Message Concern." 
                   name="message" 
                   value={formData.message} 
                   onChange={handleChange} 
+                  required
                 />
 
                 {status === 'success' && (
@@ -487,7 +460,7 @@ export default function Home() {
                 )}
 
                 <button
-                  onClick={handleSubmit}
+                  type="submit"
                   disabled={status === 'sending'}
                   style={{
                     ...styles.btnDark,
@@ -501,7 +474,7 @@ export default function Home() {
                 >
                   {status === 'sending' ? 'Sending...' : 'Submit Message!'}
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>
