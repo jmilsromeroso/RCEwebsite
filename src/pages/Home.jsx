@@ -6,7 +6,7 @@ const GRC_RED = '#C8102E';
 
 const styles = {
   container: { fontFamily: "'Poppins', sans-serif" },
-  sectionMax: { maxWidth: '1200px', margin: '0 auto' },
+  sectionMax: { maxWidth: '1400px', margin: '0 auto' }, // Increased max width for better large logo spacing
   heroSection: {
     backgroundColor: GRC_RED,
     minHeight: '100vh',
@@ -14,6 +14,7 @@ const styles = {
     overflow: 'hidden',
     display: 'flex',
     alignItems: 'center',
+    padding: '60px 0',
   },
   btnDark: {
     display: 'inline-flex',
@@ -61,6 +62,7 @@ function useIsMobile(breakpoint = 768) {
   return isMobile;
 }
 
+// ... INFO_CARDS remains the same ...
 const INFO_CARDS = [
   {
     id: 1,
@@ -292,10 +294,6 @@ function InfoCarousel() {
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// MAIN PAGE COMPONENT
-// ─────────────────────────────────────────────────────────────────────────────
-
 export default function Home() {
   const isMobile = useIsMobile();
 
@@ -307,12 +305,9 @@ export default function Home() {
   });
   const [status, setStatus] = useState('idle');
 
-  // Initialize using your 2nd set of credentials
   useEffect(() => {
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-    if (publicKey) {
-      emailjs.init(publicKey);
-    }
+    if (publicKey) emailjs.init(publicKey);
   }, []);
 
   const handleChange = (e) => {
@@ -321,7 +316,6 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); 
-    
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const templateId = import.meta.env.VITE_CONCERN_TEMPLATE_ID;
 
@@ -331,7 +325,6 @@ export default function Home() {
     }
 
     setStatus('sending');
-    
     const templateParams = {
       from_name: formData.fullName,
       student_no: formData.studentNo,
@@ -357,44 +350,74 @@ export default function Home() {
         @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
         .hero-inner { animation: fadeUp 0.8s ease forwards; }
         * { box-sizing: border-box; }
-        @media (max-width: 768px) {
-          .contact-inner { flex-direction: column !important; gap: 40px !important; }
-        }
       `}</style>
 
-      {/* ── HERO SECTION ── */}
+      {/* ── HERO SECTION WITH LARGE LOGO ── */}
       <section style={styles.heroSection}>
         <div style={styles.noiseOverlay} />
-        <div style={{ ...styles.sectionMax, padding: '0 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '60px', flexWrap: 'wrap', width: '100%', position: 'relative', zIndex: 1 }}>
-          <div className="hero-inner" style={{ flex: 1, minWidth: '280px', maxWidth: '580px' }}>
-            <h1 style={{ fontFamily: "'Times New Roman', serif", color: 'white', fontSize: 'clamp(34px, 5vw, 66px)', fontWeight: 900, lineHeight: 1.08, margin: '0' }}>
+        <div style={{ 
+          ...styles.sectionMax, 
+          padding: '0 48px', 
+          display: 'flex', 
+          flexDirection: isMobile ? 'column' : 'row',
+          alignItems: 'center', 
+          justifyContent: 'space-between', 
+          gap: isMobile ? '40px' : '80px', 
+          width: '100%', 
+          position: 'relative', 
+          zIndex: 1 
+        }}>
+          <div className="hero-inner" style={{ flex: 1.2, minWidth: '280px', maxWidth: '650px', textAlign: isMobile ? 'center' : 'left' }}>
+            <h1 style={{ fontFamily: "'Times New Roman', serif", color: 'white', fontSize: 'clamp(38px, 6vw, 76px)', fontWeight: 900, lineHeight: 1.05, margin: '0' }}>
               Research and <span style={{ fontStyle: 'italic' }}>Community</span><br />Extension
             </h1>
-            <p style={{ color: 'rgba(255,255,255,0.82)', fontSize: '15px', lineHeight: 1.9, maxWidth: '440px', margin: '32px 0 44px' }}>
+            <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '16px', lineHeight: 1.9, maxWidth: '480px', margin: '32px 0 44px' }}>
               Empowering society through purposeful research and dedicated service. We bridge the gap between academic theory and community action.
             </p>
             <Link to="/contact" style={styles.btnDark}>ENROLL NOW!</Link>
           </div>
-          <div style={{ flexShrink: 0 }}>
-            <img src="/img/RCE logo.png" alt="Logo" style={{ width: 'clamp(200px, 35vw, 460px)', objectFit: 'contain' }} />
+
+          {/* LARGE RCE LOGO */}
+          <div className="hero-inner" style={{ 
+            flex: 1, 
+            display: 'flex', 
+            justifyContent: isMobile ? 'center' : 'flex-end',
+            opacity: 0.95 
+          }}>
+            <img 
+              src="/img/RCE logo.png" 
+              alt="RCE Logo" 
+              style={{ 
+                width: 'clamp(280px, 45vw, 650px)', // Large Desktop, Responsive Mobile
+                height: 'auto', 
+                objectFit: 'contain' 
+              }} 
+            />
           </div>
         </div>
       </section>
 
       {/* ── INFORMATION SECTION ── */}
-      <section style={{ backgroundColor: '#fafafa', padding: '88px 48px' }}>
+      <section style={{ backgroundColor: '#fafafa', padding: '100px 48px' }}>
         <div style={styles.sectionMax}>
            <InfoCarousel />
         </div>
       </section>
 
       {/* ── ABOUT US SECTION ── */}
-      <section style={{ backgroundColor: 'white', padding: '100px 48px' }}>
-        <div style={{ ...styles.sectionMax, display: 'flex', alignItems: 'center', gap: '80px', flexWrap: 'wrap' }}>
-          <img src="/img/grc logo.png" alt="GRC" style={{ width: 'clamp(200px, 40vw, 450px)', objectFit: 'contain' }} />
-          <div style={{ flex: 1 }}>
-            <h2 style={{ fontSize: 'clamp(26px, 4vw, 48px)', fontWeight: 900, marginBottom: '25px' }}>Advancing Knowledge, Serving Community.</h2>
-            <p style={{ color: '#555', lineHeight: 1.8, marginBottom: '32px' }}>The RCE office is dedicated to technical excellence and civic duty.</p>
+      <section style={{ backgroundColor: 'white', padding: '120px 48px' }}>
+        <div style={{ ...styles.sectionMax, display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: '80px' }}>
+          {/* LARGE GRC LOGO */}
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+            <img 
+              src="/img/grc logo.png" 
+              alt="GRC" 
+              style={{ width: 'clamp(300px, 40vw, 550px)', height: 'auto', objectFit: 'contain' }} 
+            />
+          </div>
+          <div style={{ flex: 1.2, textAlign: isMobile ? 'center' : 'left' }}>
+            <h2 style={{ fontSize: 'clamp(32px, 5vw, 54px)', fontWeight: 900, marginBottom: '25px', lineHeight: 1.1 }}>Advancing Knowledge, Serving Community.</h2>
+            <p style={{ color: '#555', fontSize: '18px', lineHeight: 1.8, marginBottom: '40px' }}>The RCE office is dedicated to technical excellence and civic duty.</p>
             <Link to="/about" style={{ ...styles.btnDark, backgroundColor: GRC_RED }}>Extension Details</Link>
           </div>
         </div>
@@ -415,31 +438,36 @@ export default function Home() {
       >
         <div style={styles.noiseOverlay} />
         <div style={{ ...styles.sectionMax, position: 'relative', zIndex: 1, width: '100%' }}>
-          <div style={{ textAlign: 'center', marginBottom: '56px' }}>
-            <h2 style={{ color: 'white', fontSize: 'clamp(22px, 4vw, 46px)', fontWeight: 900, marginBottom: '14px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '70px' }}>
+            <h2 style={{ color: 'white', fontSize: 'clamp(28px, 5vw, 52px)', fontWeight: 900, marginBottom: '14px' }}>
               Partner with <span style={{ color: '#FFCCD5' }}>RCE Today.</span>
             </h2>
-            <h5 style={{ color: 'white', fontSize: '1.2rem', fontWeight: 300 }}>
+            <h5 style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.4rem', fontWeight: 300 }}>
               Submit your <span style={{ color: '#FFCCD5' }}>Concern Today!</span>
             </h5>
           </div>
 
-          <div className="contact-inner" style={{ display: 'flex', gap: '56px', flexWrap: 'wrap' }}>
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: isMobile ? 'column' : 'row', 
+            gap: '80px',
+            alignItems: 'flex-start' 
+          }}>
             <div style={{ flex: 1, minWidth: '220px' }}>
               <ContactInfo icon="📍" text="454 GRC Building, Rizal Ave Ext, Grace Park, Caloocan City" />
               <ContactInfo icon="📞" text="0999-999-9999" />
               <ContactInfo icon="✉️" text="rceassistextension0104@gmail.com" />
             </div>
 
-            <div style={{ flex: 1.3, minWidth: '260px' }}>
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div style={{ flex: 1.5, minWidth: '300px', width: '100%' }}>
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                 <input style={styles.inputField} placeholder="Full Name" name="fullName" value={formData.fullName} onChange={handleChange} required />
                 <input style={styles.inputField} placeholder="Student No." name="studentNo" value={formData.studentNo} onChange={handleChange} />
                 <textarea 
                   style={{ 
                     ...styles.inputField, 
                     resize: 'none', 
-                    minHeight: '250px' 
+                    minHeight: '280px' 
                   }} 
                   placeholder="Message Concern." 
                   name="message" 
@@ -449,12 +477,12 @@ export default function Home() {
                 />
 
                 {status === 'success' && (
-                  <div style={{ padding: '12px', borderRadius: '4px', backgroundColor: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid #90EE90', textAlign: 'center' }}>
+                  <div style={{ padding: '15px', borderRadius: '4px', backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff', border: '1px solid #90EE90', textAlign: 'center' }}>
                     ✅ Success! Your message has been submitted to RCE.
                   </div>
                 )}
                 {status === 'error' && (
-                  <div style={{ padding: '12px', borderRadius: '4px', backgroundColor: 'rgba(255,255,255,0.1)', color: '#FFB3B3', textAlign: 'center' }}>
+                  <div style={{ padding: '15px', borderRadius: '4px', backgroundColor: 'rgba(255,255,255,0.1)', color: '#FFB3B3', textAlign: 'center' }}>
                     ❌ Something went wrong. Please check your connection.
                   </div>
                 )}
@@ -481,7 +509,7 @@ export default function Home() {
       </section>
 
       {/* ── MAP SECTION ── */}
-      <div style={{ width: '100%', height: '380px', backgroundColor: '#eee' }}>
+      <div style={{ width: '100%', height: '450px', backgroundColor: '#eee' }}>
         <iframe
           title="GRC Location"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d965.0193!2d120.9835096!3d14.6498596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b5d4fab883bb%3A0x96f1adb22bed4d5e!2sGlobal%20Reciprocal%20Colleges%20-%20GRC!5e0!3m2!1sen!2sph!4v1744000000000!5m2!1sen!2sph"
@@ -496,9 +524,9 @@ export default function Home() {
 
 function ContactInfo({ icon, text }) {
   return (
-    <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', marginBottom: '15px' }}>
-      <span style={{ fontSize: '18px' }}>{icon}</span>
-      <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '13px', lineHeight: 1.7, margin: 0 }}>{text}</p>
+    <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start', marginBottom: '25px' }}>
+      <span style={{ fontSize: '24px' }}>{icon}</span>
+      <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '15px', lineHeight: 1.7, margin: 0 }}>{text}</p>
     </div>
   );
 }

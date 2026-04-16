@@ -92,7 +92,6 @@ const GLOBAL_CSS = `
   .hero-body    { animation: fadeUp 0.6s ease both; animation-delay: 0.55s; }
   .hero-image   { animation: fadeUp 0.8s ease both; animation-delay: 0.30s; }
 
-  /* DYNAMIC GRID UTILITIES */
   .contact-grid { 
     display: grid; 
     grid-template-columns: 1fr 1.4fr; 
@@ -106,13 +105,12 @@ const GLOBAL_CSS = `
     gap: 16px; 
   }
 
-  /* RESPONSIVE OVERRIDES */
   @media (max-width: 960px) {
     .hero-inner { 
       flex-direction: column !important; 
       text-align: center !important; 
       padding: 80px 24px !important; 
-      gap: 40px !important; 
+      gap: 50px !important; 
       justify-content: center !important;
     }
     .hero-divider { margin: 0 auto 20px !important; }
@@ -127,12 +125,6 @@ const GLOBAL_CSS = `
     .hero-heading { font-size: 2.2rem !important; }
     .social-grid { grid-template-columns: 1fr !important; }
     .contact-section { padding: 48px 20px !important; }
-    .hero-image img { 
-       width: 80vw !important; 
-       height: auto !important; 
-       max-width: 300px !important; 
-    }
-    .hero-inner { padding: 60px 20px !important; }
   }
 `;
 
@@ -195,13 +187,24 @@ function HeroSection() {
       <div style={{ position: 'absolute', inset: 0, opacity: 0.06, pointerEvents: 'none', backgroundImage: NOISE_TEXTURE, backgroundSize: '200px 200px' }} />
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '6px', backgroundColor: DARK_RED, zIndex: 2 }} />
 
-      <div className="hero-inner" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '60px', position: 'relative', zIndex: 1, width: '100%' }}>
-        <div style={{ flex: 1, minWidth: '280px', maxWidth: '580px' }}>
+      <div className="hero-inner" style={{ 
+        maxWidth: '1400px', 
+        margin: '0 auto', 
+        padding: '0 64px', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'space-between', 
+        gap: '80px', 
+        position: 'relative', 
+        zIndex: 1, 
+        width: '100%' 
+      }}>
+        <div style={{ flex: 1.2, minWidth: '280px', maxWidth: '650px' }}>
           <div className="hero-eyebrow" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
             <span style={{ display: 'block', width: '40px', height: '2px', backgroundColor: 'rgba(255,255,255,0.5)' }} />
             <span style={{ color: 'rgba(255,255,255,0.65)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase' }}>Contact Us</span>
           </div>
-          <h1 className="hero-heading" style={{ color: 'white', fontSize: 'clamp(32px, 5vw, 66px)', fontFamily: "'Times New Roman', Times, serif", fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.01em', margin: '0 0 20px 0' }}>
+          <h1 className="hero-heading" style={{ color: 'white', fontSize: 'clamp(34px, 6vw, 72px)', fontFamily: "'Times New Roman', Times, serif", fontWeight: 900, lineHeight: 1.05, letterSpacing: '-0.01em', margin: '0 0 20px 0' }}>
             Let's Build Your <span style={{ fontStyle: 'italic' }}>Future,</span><br />Together.
           </h1>
           <div className="hero-divider" style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '0 0 20px 0', maxWidth: '320px' }}>
@@ -209,13 +212,29 @@ function HeroSection() {
             <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: 'white', flexShrink: 0 }} />
             <span style={{ flex: 1, height: '1px', backgroundColor: 'rgba(255,255,255,0.25)' }} />
           </div>
-          <p className="hero-body" style={{ color: 'rgba(255,255,255,0.82)', fontSize: '15px', lineHeight: 1.9, maxWidth: '440px', margin: 0 }}>
+          <p className="hero-body" style={{ color: 'rgba(255,255,255,0.85)', fontSize: '16px', lineHeight: 1.9, maxWidth: '480px', margin: 0 }}>
             From protecting your career goals to empowering the next generation of professionals — a dedicated network of alumni offering career guidance and lifelong support.
           </p>
         </div>
 
-        <div className="hero-image" style={{ flexShrink: 0 }}>
-          <img src="/img/nstp removebg-preview.png" alt="NSTP Logo" style={{ width: 'clamp(260px, 35vw, 460px)', height: 'auto', maxHeight: '460px', objectFit: 'contain', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }} />
+        {/* LOGO CONTAINER: Scaled up to match branding */}
+        <div className="hero-image" style={{ 
+          flex: 1, 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center',
+          flexShrink: 0 
+        }}>
+          <img 
+            src="/img/nstp removebg-preview.png" 
+            alt="NSTP Logo" 
+            style={{ 
+              width: 'clamp(300px, 48vw, 680px)', // Increased size range
+              height: 'auto', 
+              objectFit: 'contain', 
+              filter: 'drop-shadow(0 15px 40px rgba(0,0,0,0.35))' 
+            }} 
+          />
         </div>
       </div>
     </section>
@@ -224,13 +243,13 @@ function HeroSection() {
 
 function ContactSection({ fields, onFieldChange, onSubmit, status }) {
   return (
-    <section id="contact-form" className="contact-section" style={{ backgroundColor: 'white', padding: '80px 32px' }}>
+    <section id="contact-form" className="contact-section" style={{ backgroundColor: 'white', padding: '100px 32px' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         <p style={{ color: '#888', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '8px' }}>Contact Information</p>
-        <h2 style={{ fontSize: 'clamp(22px, 3.5vw, 36px)', fontWeight: 900, color: '#111', marginBottom: '12px' }}>
+        <h2 style={{ fontSize: 'clamp(26px, 4vw, 42px)', fontWeight: 900, color: '#111', marginBottom: '12px' }}>
           Start with a free <span style={{ color: RED }}>Consultation</span>
         </h2>
-        <p style={{ color: '#666', fontSize: '13px', lineHeight: 1.75, maxWidth: '480px', marginBottom: '40px' }}>
+        <p style={{ color: '#666', fontSize: '15px', lineHeight: 1.75, maxWidth: '520px', marginBottom: '50px' }}>
           No obligation, no runaround. Whether you're looking to connect with alumni, need guidance, or just want to know your options.
         </p>
 
@@ -239,23 +258,23 @@ function ContactSection({ fields, onFieldChange, onSubmit, status }) {
             {INFO_CARDS.map((card) => <InfoCard key={card.title} card={card} />)}
           </div>
 
-          <div className="form-container" style={{ backgroundColor: '#FDECEA', borderRadius: '10px', padding: 'min(28px, 5vw)', border: '1px solid rgba(200,16,46,0.08)' }}>
-            <p style={{ color: '#555', fontSize: '13px', marginBottom: '16px', fontWeight: 500 }}>Send Us a Message</p>
-            <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div className="form-container" style={{ backgroundColor: '#FDECEA', borderRadius: '10px', padding: 'min(36px, 6vw)', border: '1px solid rgba(200,16,46,0.08)' }}>
+            <p style={{ color: '#555', fontSize: '14px', marginBottom: '20px', fontWeight: 600 }}>Send Us a Message</p>
+            <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               <input name="name" placeholder="Name:" value={fields.name} onChange={onFieldChange} style={INPUT_STYLE} required />
               <input name="email" placeholder="Email:" value={fields.email} onChange={onFieldChange} style={INPUT_STYLE} type="email" required />
               <input name="contact" placeholder="Contact:" value={fields.contact} onChange={onFieldChange} style={INPUT_STYLE} required />
               <textarea name="message" placeholder="Message:" value={fields.message} onChange={onFieldChange} rows={6} style={{ ...INPUT_STYLE, resize: 'none' }} required />
               
-              {status === 'success' && <p style={{ color: 'green', fontSize: '12px' }}>✅ Message sent successfully!</p>}
-              {status === 'error' && <p style={{ color: RED, fontSize: '12px' }}>❌ Failed to send. Please try again.</p>}
+              {status === 'success' && <p style={{ color: 'green', fontSize: '13px', fontWeight: 500 }}>✅ Message sent successfully!</p>}
+              {status === 'error' && <p style={{ color: RED, fontSize: '13px', fontWeight: 500 }}>❌ Failed to send. Please try again.</p>}
 
               <button 
                 type="submit" 
                 disabled={status === 'sending'}
                 style={{ 
-                  backgroundColor: RED, color: 'white', border: 'none', padding: '15px', 
-                  fontWeight: 700, fontSize: '13px', textTransform: 'uppercase', 
+                  backgroundColor: RED, color: 'white', border: 'none', padding: '16px', 
+                  fontWeight: 700, fontSize: '14px', textTransform: 'uppercase', 
                   borderRadius: '4px', cursor: status === 'sending' ? 'not-allowed' : 'pointer',
                   opacity: status === 'sending' ? 0.7 : 1, transition: '0.2s opacity'
                 }}>
@@ -271,7 +290,7 @@ function ContactSection({ fields, onFieldChange, onSubmit, status }) {
 
 function MapSection() {
   return (
-    <div style={{ width: '100%', height: '340px', position: 'relative' }}>
+    <div style={{ width: '100%', height: '400px', position: 'relative' }}>
       <iframe
         title="GRC Location"
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.055961608823!2d120.9858348757451!3d14.652784585841071!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b6002f231e33%3A0xc3f8376e19c01f41!2sGlobal%20Reciprocal%20Colleges!5e0!3m2!1sen!2sph!4v1713214567890!5m2!1sen!2sph"
@@ -285,10 +304,10 @@ function MapSection() {
 
 function FollowUsSection() {
   return (
-    <section style={{ background: 'linear-gradient(170deg, #9b0020 0%, #6b0010 100%)', padding: '64px 32px', position: 'relative' }}>
+    <section style={{ background: 'linear-gradient(170deg, #9b0020 0%, #6b0010 100%)', padding: '80px 32px', position: 'relative' }}>
       <div style={{ position: 'absolute', inset: 0, opacity: 0.04, pointerEvents: 'none', backgroundImage: NOISE_TEXTURE }} />
-      <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
-        <h2 style={{ color: 'white', fontWeight: 900, fontSize: '28px', textTransform: 'uppercase', marginBottom: '32px', letterSpacing: '0.05em' }}>
+      <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+        <h2 style={{ color: 'white', fontWeight: 900, fontSize: '32px', textTransform: 'uppercase', marginBottom: '40px', letterSpacing: '0.05em' }}>
           Follow Us <span style={{ color: '#FFD0D8' }}>Online</span>
         </h2>
         <div className="social-grid">

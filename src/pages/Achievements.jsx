@@ -16,9 +16,10 @@ const PROJECTS = [
 
 // ── 3. CUSTOM RESPONSIVE HOOK ──
 function useIsMobile(breakpoint = 768) {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < breakpoint);
+  const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < breakpoint);
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [breakpoint]);
@@ -27,7 +28,7 @@ function useIsMobile(breakpoint = 768) {
 
 const styles = {
   container: { fontFamily: "'Poppins', sans-serif", color: '#333', overflowX: 'hidden' },
-  sectionMax: { maxWidth: '1200px', margin: '0 auto', padding: '0 24px' },
+  sectionMax: { maxWidth: '1400px', margin: '0 auto', padding: '0 24px' },
   hero: {
     backgroundColor: GRC_RED,
     minHeight: '100vh',
@@ -35,7 +36,7 @@ const styles = {
     overflow: 'hidden',
     display: 'flex',
     alignItems: 'center',
-    padding: '60px 0',
+    padding: '80px 0',
   },
   noise: {
     position: 'absolute', inset: 0, opacity: 0.06,
@@ -127,7 +128,7 @@ function RotatingCarousel({ items, autoPlay = true, interval = 3200 }) {
   };
 
   const angleStep = 360 / count;
-  const radius = isMobile ? 140 : 280; // Smaller radius for mobile
+  const radius = isMobile ? 140 : 280;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: isMobile ? 20 : 36 }}>
@@ -209,25 +210,40 @@ export default function Achievements() {
             gap: isMobile ? '40px' : '60px',
             textAlign: isMobile ? 'center' : 'left'
           }}>
-            <div style={{ flex: 1, maxWidth: isMobile ? '100%' : '580px' }}>
+            <div style={{ flex: 1.2, maxWidth: isMobile ? '100%' : '650px' }}>
               <div className="hero-anim" style={{ marginBottom: '24px' }}>
                 <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
                   Our Achievements
                 </span>
               </div>
               <h1 className="hero-anim" style={{
-                fontFamily: "'Times New Roman', serif", color: 'white', fontSize: 'clamp(32px, 8vw, 66px)',
+                fontFamily: "'Times New Roman', serif", color: 'white', fontSize: 'clamp(38px, 8vw, 72px)',
                 fontWeight: 900, lineHeight: 1.1, margin: 0,
               }}>
                 Integrity in Learning, <br />
                 <span style={{ fontStyle: 'italic' }}>Trust</span> in Leadership.
               </h1>
-              <p className="hero-anim" style={{ color: 'rgba(255,255,255,0.8)', fontSize: isMobile ? '14px' : '16px', lineHeight: 1.8, marginTop: '24px' }}>
+              <p className="hero-anim" style={{ color: 'rgba(255,255,255,0.8)', fontSize: isMobile ? '15px' : '18px', lineHeight: 1.8, marginTop: '24px' }}>
                 Four decades of academic milestones and career breakthroughs. Shaping the future of global industries.
               </p>
             </div>
-            <div className="hero-anim" style={{ opacity: 0.9 }}>
-              <img src={GRC_ICON_PHOTO} alt="Logo" style={{ width: isMobile ? '200px' : '400px', height: 'auto', objectFit: 'contain' }} />
+            
+            {/* LARGE LOGO CONTAINER */}
+            <div className="hero-anim" style={{ 
+              opacity: 0.9, 
+              flex: 1, 
+              display: 'flex', 
+              justifyContent: isMobile ? 'center' : 'flex-end' 
+            }}>
+              <img 
+                src={GRC_ICON_PHOTO} 
+                alt="Logo" 
+                style={{ 
+                  width: 'clamp(280px, 45vw, 650px)', // Fixed: Huge on desktop, responsive on mobile
+                  height: 'auto', 
+                  objectFit: 'contain' 
+                }} 
+              />
             </div>
           </div>
         </div>
@@ -236,46 +252,108 @@ export default function Achievements() {
       {/* PROJECTS SECTION */}
       <section style={{ backgroundColor: 'white', padding: isMobile ? '60px 0' : '100px 0' }}>
         <div style={styles.sectionMax}>
-          <h2 style={{ textAlign: 'center', fontWeight: 900, fontSize: isMobile ? '24px' : '32px', color: GRC_RED }}>Projects</h2>
-          <p style={{ textAlign: 'center', color: '#aaa', fontSize: '12px', marginBottom: '40px' }}>Swipe or click to explore</p>
+          <h2 style={{ textAlign: 'center', fontWeight: 900, fontSize: isMobile ? '28px' : '40px', color: GRC_RED }}>Projects</h2>
+          <p style={{ textAlign: 'center', color: '#aaa', fontSize: '14px', marginBottom: '40px' }}>Swipe or click to explore</p>
           <RotatingCarousel items={PROJECTS} />
         </div>
       </section>
 
-      {/* INNOVATION & GROWTH */}
-      <section style={{ backgroundColor: '#fff', paddingBottom: '80px' }}>
+      {/* INNOVATION & GROWTH SECTION */}
+      <section style={{ backgroundColor: '#fff', paddingBottom: '100px' }}>
         <div style={{ ...styles.sectionMax, textAlign: 'center' }}>
-          <h2 style={{ fontWeight: 900, fontSize: isMobile ? '28px' : '36px', color: GRC_RED, marginBottom: '40px' }}>Innovation & Growth</h2>
+          <h2 style={{ fontWeight: 900, fontSize: isMobile ? '36px' : '55px', color: GRC_RED, marginBottom: '50px' }}>
+            Innovation & Growth
+          </h2>
+          
           <div style={{ 
             display: 'flex', 
-            gap: '20px', 
+            gap: '30px', 
             flexDirection: isMobile ? 'column' : 'row',
+            alignItems: 'stretch',
             justifyContent: 'center' 
           }}>
-            <div style={{ flex: 1, padding: '30px', borderTop: `4px solid ${GRC_RED}`, background: '#fefefe', boxShadow: '0 5px 15px rgba(0,0,0,0.05)', borderRadius: '8px', textAlign: 'left' }}>
-              <h3 style={{ fontSize: '14px', fontWeight: 800, color: GRC_RED, marginBottom: '10px' }}>MISSION</h3>
-              <p style={{ fontSize: '14px', lineHeight: 1.6 }}>Values-based quality education for socially responsible professionals.</p>
+            {/* Mission Card */}
+            <div style={{ 
+              flex: 1, 
+              padding: isMobile ? '50px 20px' : '100px 40px', 
+              borderTop: `6px solid ${GRC_RED}`, 
+              background: '#e6dfdf', 
+              boxShadow: '0 8px 25px rgba(0,0,0,0.08)', 
+              borderRadius: '12px', 
+              textAlign: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              minHeight: isMobile ? 'auto' : '450px'
+            }}>
+              <h3 style={{ 
+                fontSize: 'clamp(40px, 10vw, 70px)', 
+                fontWeight: 900, 
+                color: GRC_RED, 
+                marginBottom: '20px', 
+                marginTop: 0 
+              }}>
+                MISSION
+              </h3>
+              <p style={{ 
+                fontSize: 'clamp(20px, 5vw, 36px)', 
+                lineHeight: 1.2, 
+                fontWeight: 500, 
+                margin: 0 
+              }}>
+                Values-based quality education for socially responsible professionals.
+              </p>
             </div>
-            <div style={{ flex: 1, padding: '30px', borderTop: `4px solid ${GRC_RED}`, background: '#fefefe', boxShadow: '0 5px 15px rgba(0,0,0,0.05)', borderRadius: '8px', textAlign: 'left' }}>
-              <h3 style={{ fontSize: '14px', fontWeight: 800, color: GRC_RED, marginBottom: '10px' }}>VISION</h3>
-              <p style={{ fontSize: '14px', lineHeight: 1.6 }}>A global community of excellent individuals with strong institutional values.</p>
+
+            {/* Vision Card */}
+            <div style={{ 
+              flex: 1, 
+              padding: isMobile ? '50px 20px' : '100px 40px', 
+              borderTop: `6px solid ${GRC_RED}`, 
+              background: '#e6dfdf', 
+              boxShadow: '0 8px 25px rgba(0,0,0,0.08)', 
+              borderRadius: '12px', 
+              textAlign: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              minHeight: isMobile ? 'auto' : '450px'
+            }}>
+              <h3 style={{ 
+                fontSize: 'clamp(40px, 10vw, 70px)', 
+                fontWeight: 900, 
+                color: GRC_RED, 
+                marginBottom: '20px', 
+                marginTop: 0 
+              }}>
+                VISION
+              </h3>
+              <p style={{ 
+                fontSize: 'clamp(20px, 5vw, 36px)', 
+                lineHeight: 1.2, 
+                fontWeight: 500, 
+                margin: 0 
+              }}>
+                A global community of excellent individuals with strong institutional values.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* GALLERY */}
-      <section style={{ backgroundColor: GRC_RED, padding: '40px 0' }}>
-        <div style={{ ...styles.sectionMax, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '15px' }}>
-          {[1, 2, 3].map(i => (
-            <div key={i} style={{ backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: '8px', height: isMobile ? '150px' : '200px' }} />
+      <section style={{ backgroundColor: GRC_RED, padding: '60px 0' }}>
+        <div style={{ ...styles.sectionMax, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '20px' }}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
+            <div key={i} style={{ backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: '10px', height: isMobile ? '180px' : '250px' }} />
           ))}
         </div>
       </section>
 
       {/* MAP */}
-      <div style={{ width: '100%', height: '300px' }}>
-        <iframe title="Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d965.0193!2d120.9835096!3d14.6498596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b5d4fab883bb%3A0x96f1adb22bed4d5e!2sGlobal%20Reciprocal%20Colleges%20-%20GRC!5e0!3m2!1sen!2sph!4v1744000000000!5m2!1sen!2sph" style={{ width: '100%', height: '100%', border: 'none' }} />
+      <div style={{ width: '100%', height: '400px' }}>
+        <iframe title="Map" src="https://maps.google.com/maps?q=Caloocan&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+        style={{ width: '100%', height: '100%', border: 'none' }} />
       </div>
     </div>
   );
