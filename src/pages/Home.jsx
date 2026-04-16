@@ -484,7 +484,7 @@ export default function Home() {
       <div style={{ width: '100%', height: '380px', backgroundColor: '#eee' }}>
         <iframe
           title="GRC Location"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.0524458514127!2d120.98404287510714!3d14.653013885841454!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b5d63f9d5555%3A0x66f68748d5334c9c!2sGlobal%20Reciprocal%20Colleges!5e0!3m2!1sen!2sph!4v1713145600000!5m2!1sen!2sph"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d965.0193!2d120.9835096!3d14.6498596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b5d4fab883bb%3A0x96f1adb22bed4d5e!2sGlobal%20Reciprocal%20Colleges%20-%20GRC!5e0!3m2!1sen!2sph!4v1744000000000!5m2!1sen!2sph"
           style={{ width: '100%', height: '100%', border: 'none' }}
           loading="lazy"
           allowFullScreen
