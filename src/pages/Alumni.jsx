@@ -266,7 +266,7 @@ export default function Alumni() {
               )}
               {status === 'error' && (
                 <div style={{ padding: '12px', borderRadius: '4px', backgroundColor: 'rgba(255,255,255,0.1)', color: '#FFB3B3', textAlign: 'center', fontSize: '13px' }}>
-                  ❌ Submission failed. Check console for details.
+                  ❌ Failed to send. Please try again!
                 </div>
               )}
 

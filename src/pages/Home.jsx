@@ -480,12 +480,12 @@ export default function Home() {
 
                 {status === 'success' && (
                   <div style={{ padding: '15px', borderRadius: '4px', backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff', border: '1px solid #90EE90', textAlign: 'center' }}>
-                    ✅ Success! Your message has been submitted to RCE.
+                    ✅ Success! Your Concern has been submitted to RCE.
                   </div>
                 )}
                 {status === 'error' && (
                   <div style={{ padding: '15px', borderRadius: '4px', backgroundColor: 'rgba(255,255,255,0.1)', color: '#FFB3B3', textAlign: 'center' }}>
-                    ❌ Something went wrong. Please check your connection.
+                    ❌ Failed to send. Please try again!
                   </div>
                 )}
 
