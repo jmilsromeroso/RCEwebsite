@@ -6,7 +6,7 @@ const GRC_RED = '#C8102E';
 
 const styles = {
   container: { fontFamily: "'Poppins', sans-serif" },
-  sectionMax: { maxWidth: '1400px', margin: '0 auto' }, // Increased max width for better large logo spacing
+  sectionMax: { maxWidth: '1400px', margin: '0 auto' },
   heroSection: {
     backgroundColor: GRC_RED,
     minHeight: '100vh',
@@ -62,7 +62,6 @@ function useIsMobile(breakpoint = 768) {
   return isMobile;
 }
 
-// ... INFO_CARDS remains the same ...
 const INFO_CARDS = [
   {
     id: 1,
@@ -301,6 +300,7 @@ export default function Home() {
   const [formData, setFormData] = useState({
     fullName: '',
     studentNo: '',
+    email: '',
     message: '',
   });
   const [status, setStatus] = useState('idle');
@@ -315,7 +315,7 @@ export default function Home() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const templateId = import.meta.env.VITE_CONCERN_TEMPLATE_ID;
 
@@ -328,6 +328,7 @@ export default function Home() {
     const templateParams = {
       from_name: formData.fullName,
       student_no: formData.studentNo,
+      email: formData.email,
       message: formData.message,
       to_email: "jmilsromeroso@gmail.com",
     };
@@ -335,7 +336,7 @@ export default function Home() {
     try {
       await emailjs.send(serviceId, templateId, templateParams);
       setStatus('success');
-      setFormData({ fullName: '', studentNo: '', message: '' }); 
+      setFormData({ fullName: '', studentNo: '', email: '', message: '' });
       setTimeout(() => setStatus('idle'), 6000);
     } catch (err) {
       console.error("Submission Error:", err);
@@ -355,17 +356,17 @@ export default function Home() {
       {/* ── HERO SECTION WITH LARGE LOGO ── */}
       <section style={styles.heroSection}>
         <div style={styles.noiseOverlay} />
-        <div style={{ 
-          ...styles.sectionMax, 
-          padding: '0 48px', 
-          display: 'flex', 
+        <div style={{
+          ...styles.sectionMax,
+          padding: '0 48px',
+          display: 'flex',
           flexDirection: isMobile ? 'column' : 'row',
-          alignItems: 'center', 
-          justifyContent: 'space-between', 
-          gap: isMobile ? '40px' : '80px', 
-          width: '100%', 
-          position: 'relative', 
-          zIndex: 1 
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: isMobile ? '40px' : '80px',
+          width: '100%',
+          position: 'relative',
+          zIndex: 1
         }}>
           <div className="hero-inner" style={{ flex: 1.2, minWidth: '280px', maxWidth: '650px', textAlign: isMobile ? 'center' : 'left' }}>
             <h1 style={{ fontFamily: "'Times New Roman', serif", color: 'white', fontSize: 'clamp(38px, 6vw, 76px)', fontWeight: 900, lineHeight: 1.05, margin: '0' }}>
@@ -378,20 +379,20 @@ export default function Home() {
           </div>
 
           {/* LARGE RCE LOGO */}
-          <div className="hero-inner" style={{ 
-            flex: 1, 
-            display: 'flex', 
+          <div className="hero-inner" style={{
+            flex: 1,
+            display: 'flex',
             justifyContent: isMobile ? 'center' : 'flex-end',
-            opacity: 0.95 
+            opacity: 0.95
           }}>
-            <img 
-              src="/img/RCE logo.png" 
-              alt="RCE Logo" 
-              style={{ 
-                width: 'clamp(280px, 45vw, 650px)', // Large Desktop, Responsive Mobile
-                height: 'auto', 
-                objectFit: 'contain' 
-              }} 
+            <img
+              src="/img/RCE logo.png"
+              alt="RCE Logo"
+              style={{
+                width: 'clamp(280px, 45vw, 650px)',
+                height: 'auto',
+                objectFit: 'contain'
+              }}
             />
           </div>
         </div>
@@ -409,10 +410,10 @@ export default function Home() {
         <div style={{ ...styles.sectionMax, display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: '80px' }}>
           {/* LARGE GRC LOGO */}
           <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-            <img 
-              src="/img/grc logo.png" 
-              alt="GRC" 
-              style={{ width: 'clamp(300px, 40vw, 550px)', height: 'auto', objectFit: 'contain' }} 
+            <img
+              src="/img/grc logo.png"
+              alt="GRC"
+              style={{ width: 'clamp(300px, 40vw, 550px)', height: 'auto', objectFit: 'contain' }}
             />
           </div>
           <div style={{ flex: 1.2, textAlign: isMobile ? 'center' : 'left' }}>
@@ -424,14 +425,14 @@ export default function Home() {
       </section>
 
       {/* ── CONTACT SECTION ── */}
-      <section 
-        className="contact-section" 
-        style={{ 
-          background: `linear-gradient(135deg, #e0102e 0%, #9b0020 100%)`, 
-          padding: '120px 32px', 
-          position: 'relative', 
+      <section
+        className="contact-section"
+        style={{
+          background: `linear-gradient(135deg, #e0102e 0%, #9b0020 100%)`,
+          padding: '120px 32px',
+          position: 'relative',
           overflow: 'hidden',
-          minHeight: '100vh', 
+          minHeight: '100vh',
           display: 'flex',
           alignItems: 'center'
         }}
@@ -447,11 +448,11 @@ export default function Home() {
             </h5>
           </div>
 
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: isMobile ? 'column' : 'row', 
+          <div style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
             gap: '80px',
-            alignItems: 'flex-start' 
+            alignItems: 'flex-start'
           }}>
             <div style={{ flex: 1, minWidth: '220px' }}>
               <ContactInfo icon="📍" text="454 GRC Building, Rizal Ave Ext, Grace Park, Caloocan City" />
@@ -463,16 +464,17 @@ export default function Home() {
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                 <input style={styles.inputField} placeholder="Full Name" name="fullName" value={formData.fullName} onChange={handleChange} required />
                 <input style={styles.inputField} placeholder="Student No." name="studentNo" value={formData.studentNo} onChange={handleChange} />
-                <textarea 
-                  style={{ 
-                    ...styles.inputField, 
-                    resize: 'none', 
-                    minHeight: '280px' 
-                  }} 
-                  placeholder="Message Concern." 
-                  name="message" 
-                  value={formData.message} 
-                  onChange={handleChange} 
+                <input style={styles.inputField} placeholder="Email Address" name="email" type="email" value={formData.email} onChange={handleChange} required />
+                <textarea
+                  style={{
+                    ...styles.inputField,
+                    resize: 'none',
+                    minHeight: '280px'
+                  }}
+                  placeholder="Message Concern."
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   required
                 />
 
