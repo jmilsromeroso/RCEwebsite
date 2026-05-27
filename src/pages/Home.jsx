@@ -457,7 +457,7 @@ export default function Home() {
             <div style={{ flex: 1, minWidth: '220px' }}>
               <ContactInfo icon="📍" text="454 GRC Building, Rizal Ave Ext, Grace Park, Caloocan City" />
               <ContactInfo icon="📞" text="0999-999-9999" />
-              <ContactInfo icon="✉️" text="rceassistextension0104@gmail.com" />
+              <ContactInfo icon="✉️" text="rce@grc.edu.ph" />
             </div>
 
             <div style={{ flex: 1.5, minWidth: '300px', width: '100%' }}>
