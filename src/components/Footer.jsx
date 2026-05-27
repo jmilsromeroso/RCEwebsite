@@ -91,7 +91,7 @@ function ContactColumn({ isMobile }) {
             textOverflow: 'ellipsis' // Adds "..." if screen is too narrow
           }}
         >
-          researchcommunityextension@gmail.com
+          rce@grc.edu.ph
         </a>
       </div>
     </div>
